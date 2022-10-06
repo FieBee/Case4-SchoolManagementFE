@@ -1,0 +1,98 @@
+<header>
+    <!-- header inner -->
+    <div class="header">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-2 col-lg-3 col-md-3 col-sm-1 col logo_section">
+                    <div class="full">
+                        <div class="center-desk">
+                            <div class="logo">
+                                <a href="index.html"><img src="../images/logo.png" alt="#" /></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-10 col-lg-9 col-md-9 col-sm-11">
+                    <nav class="navigation navbar navbar-expand-md navbar-dark ">
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarsExample04">
+                            <ul class="navbar-nav mr-auto">
+
+
+
+
+                                <!--                              UserName -->
+
+                                <a class="nav-link" onclick="goProfile()" href="">
+                                    <li class="nav-item ">
+                                        <p id="name">
+                                        </p>
+                                    </li>
+                                </a>
+
+                                <li id="home" class="nav-item ">
+                                    <a class="nav-link" href="http://localhost:63342/Case4-FE/html/index.html?_ijt=a1n292jc1l3tppe5dh0aurpt9g&_ij_reload=RELOAD_ON_SAVE">Home</a>
+                                </li>
+                                <li id="about" class="nav-item">
+                                    <a class="nav-link" href="http://localhost:63342/Case4-FE/html/about.html?_ijt=19stpa74ipqu0i37cpt4nm37vl&_ij_reload=RELOAD_ON_SAVE">About</a>
+                                </li>
+                                <li id="service" class="nav-item">
+                                    <a class="nav-link" href="http://localhost:63342/Case4-FE/html/service.html?_ijt=6ov7d7np231p5tle4otjd3nvjf&_ij_reload=RELOAD_ON_SAVE">Services</a>
+                                </li>
+                                <li id="blog" class="nav-item">
+                                    <a class="nav-link" href="http://localhost:63342/Case4-FE/html/blog.html?_ijt=b0059kbic8qrpru57svvlbagn5&_ij_reload=RELOAD_ON_SAVE">Blog</a>
+                                </li>
+                                <li id="contact" class="nav-item">
+                                    <a class="nav-link" href="http://localhost:63342/Case4-FE/html/contact.html?_ijt=6ov7d7np231p5tle4otjd3nvjf&_ij_reload=RELOAD_ON_SAVE">Contact Us</a>
+                                </li>
+                                <li class="nav-item d_none">
+                                    <a class="nav-link" href="#"><i class="fa fa-search" aria-hidden="true"></i></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</header>
+
+<script>
+    function goProfile(){
+        let userName = localStorage.getItem("name");
+        if (userName == "ROLE_ADMIN") {
+            alert("admin")
+            window.location.href = "http://localhost:63342/Case4-FE/html/ajaxTeacher.html?_ijt=1iblmr792orr81l8mf51jn601e&_ij_reload=RELOAD_ON_SAVE"
+        }else if (userName == "ROLE_TEACHER") {
+            window.location.href = "http://localhost:63342/Case4-FE/html/teacher.html?_ijt=1iblmr792orr81l8mf51jn601e&_ij_reload=RELOAD_ON_SAVE"
+        }else if (userName == "ROLE_STUDENT") {
+            alert("di toi student")
+            window.location.href = "http://localhost:63342/Case4-FE/html/student.html?_ijt=ambmh8fhkeba75bao47d5l6hc9&_ij";
+            // window.location = "student.html";
+        }else {
+            document.getElementById("name").innerText = "Login"
+            console.log("Dang nhap deeee")
+        }
+        return;
+    }
+    function checkLogin(){
+        // let token = localStorage.getItem("token");
+        let userName = localStorage.getItem("name")
+        if (userName == null){
+            document.getElementById("name").innerText = "Login"
+        }else {
+            document.getElementById("name").innerHTML = userName
+            console.log(userName)
+
+            // alert(userName)
+        }
+        return;
+    }
+    checkLogin()
+    // goProfile()
+</script>
+
+
