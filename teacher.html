@@ -177,20 +177,25 @@
                     'Content-Type': 'application/json'
                 },
                 type:"GET",
-                url: `/api/customers?search=${search}`,
+                url: `/student/search=${search}`,
                 success:function (data){
 
                     let str = '    <tr>\n' +
                         '        <td>ID</td>\n' +
                         '        <td>First Name</td>\n' +
                         '        <td>Last Name</td>\n' +
-                        '        <td>Action</td>\n' +
+                        '        <td>Birth</td>\n' +
+                        '        <td>Address</td>\n' +
+                        '        <td>Email</td>\n' +
+                        '        <td>Phone</td>\n' +
+                        '        <td>Account</td>\n' +
+                        '        <td>Password</td>\n' +
                         '    </tr>';
 
                     for (let i = 0; i < data.content.length; i++) {
-                        str += getCustomer(data.content[i]);
+                        str += getStudent(data.content[i]);
                     }
-                    document.getElementById('customers').innerHTML = str;
+                    document.getElementById('students').innerHTML = str;
                 }
             })
 
