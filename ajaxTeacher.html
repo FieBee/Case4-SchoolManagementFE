@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <!-- Latest compiled and minified CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Latest compiled JavaScript -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="admin.css">
+  <script>
+    let index = 0;
+
+    function displayFormCreate() {
+      document.getElementById("form1").reset()
+      document.getElementById("form1").hidden = false;
+      document.getElementById("form-button").onclick = function () {
+        addNewTeacher();
+      }
+    }
+
+    function getTeacher(teacher) {
+      return `<tr><td >${teacher.firstName}</td><td >${teacher.lastName}</td><td >${teacher.birth}</td><td >${teacher.email}</td><td >${teacher.phone}</td>
+                <td >${teacher.account}</td><td >${teacher.password}</td><td >${teacher.active}</td><td >${teacher.image}</td>
+                <td><a href="${teacher.id}" onclick="showFormUpdate(this)">Edit</a></td>
+                <td><a href="${teacher.id}" onclick="deleteTeacher(this)">Delete</a></td>
+                </tr>`
+    }
+
+
+    function successHandler() {
+      $.ajax({
+        type: "GET",
+        url: "/teacher",
+        success: function (data) {
+          let content =
+                  `<tr>
+                        <td>First Name</td>
+                        <td>Last Name</td>
+                        <td>Birth Date</td>
+                        <td>Email</td>
+                        <td>Phone</td>
+                        <td>Account</td>
+                        <td>Password</td>
+                        <td>Status</td>
+                        <td>Image</td>
+                        <td>Edit</td>
+                        <td>Delete</td>
+                    </tr>`;
+          if (data == null) {
+            document.getElementById("teacherList").innerHTML = content;
+          } else {
+            for (let i = 0; i < data.length; i++) {
+              content += getTeacher(data[i]);
+            }
+            document.getElementById("teacherList").innerHTML = content;
+          }
+        }
+      })
+    }
+    successHandler();
+
+    function addNewTeacher() {
+      //lay du lieu
+      let firstName = $('#firstName').val();
+      let lastName = $('#lastName').val();
+      let birthDate = $('#birthDate').val();
+      let email = $('#email').val();
+      let phone = $('#phone').val();
+      let account = $('#account').val();
+      let password = $('#password').val();
+      let active = $('#active').val();
+      let newTeacher = {
+        firstName: firstName,
+        lastName: lastName,
+        birthDate: birthDate,
+        email: email,
+        phone: phone,
+        account: account,
+        password: password,
+        active: active,
+      };
+      $.ajax({
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        type: "POST",
+        data: JSON.stringify(newTeacher),
+        //tên API
+        url: "/teacher",
+        //xử lý khi thành công
+        success: successHandler
+
+      });
+      //chặn sự kiện mặc định của thẻ
+      event.preventDefault();
+    }
+
+    function deleteTeacher(element){
+      let id = element.getAttribute("href");
+      $.ajax({
+        type: "DELETE",
+        //tên API
+        url: `/teacher/`+id,
+        //xử lý khi thành công
+        success: function (){
+          successHandler()
+        }
+      });
+      //chặn sự kiện mặc định của thẻ
+      event.preventDefault();
+    }
+
+    function showFormUpdate(element){
+      let id = element.getAttribute("href");
+      console.log(id);
+      $.ajax({
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        type: "GET",
+        url: `/teacher/${id}`,
+        success: function (data) {
+          console.log(data);
+          console.log(id);
+          $('#id').attr('value',`${data.id}`)
+          $('#firstName').attr('value',`${data.firstName}`)
+          $('#birthDate').attr('value',`${data.lastName}`)
+          $('#email').attr('value',`${data.email}`)
+          $('#phone').attr('value',`${data.phone}`)
+          $('#account').attr('value',`${data.account}`)
+          $('#password').attr('value',`${data.password}`)
+          $('#active').attr('value',`${data.active}`)
+        }
+      })
+      event.preventDefault();
+    }
+
+    function updateTeacher() {
+      let id = $('#id').val()
+      let firstName = $('#firstName').val();
+      let lastName = $('#lastName').val();
+      let birthDate = $('#birthDate').val();
+      let email = $('#email').val();
+      let phone = $('#phone').val();
+      let account = $('#account').val();
+      let password = $('#password').val();
+      let active = $('#active').val();
+      let teacher = {
+        firstName: firstName,
+        lastName: lastName,
+        birthDate: birthDate,
+        email: email,
+        phone: phone,
+        account: account,
+        password: password,
+        active: active,
+      }
+      $.ajax({
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        type: "PUT",
+        url: `/teacher/${id}`,
+        data:JSON.stringify(teacher),
+        success: function (data) {
+          console.log(id);
+          successHandler();
+        }
+      })
+      event.preventDefault();
+    }
+
+  </script>
+
+</head>
+<body>
+<div class="container">
+  <h1>Teacher List</h1>
+
+  <div>
+  <table id="teacherList" class="table table-striped"></table>
+</div>
+
+  <button class="btn btn-primary" onclick="displayFormCreate()">Create new teacher</button>
+
+<form id="form1">
+  <input type="hidden" id="id" placeholder="id">
+  <div class="mb-3 mt-3">
+    <label for="firstName" class="form-label">First Name:</label>
+    <input type="text" class="form-control" id="firstName" placeholder="Enter name">
+  </div>
+  <div class="mb-3">
+    <label for="lastName" class="form-label">Last Name:</label>
+    <input type="text" class="form-control" id="lastName" placeholder="Enter price">
+  </div>
+  <div class="mb-3">
+    <label for="birthDate" class="form-label">Birth Date:</label>
+    <input type="text" class="form-control" id="birthDate" placeholder="Enter quantity">
+  </div>
+  <div class="mb-3">
+    <label for="email" class="form-label">Email:</label>
+    <input type="text" class="form-control" id="email" placeholder="Enter weight">
+  </div>
+  <div class="mb-3">
+    <label for="phone" class="form-label">Phone:</label>
+    <input type="text" class="form-control" id="phone" placeholder="Enter description">
+  </div>
+  <div class="mb-3">
+    <label for="account" class="form-label">Account:</label>
+    <input type="text" class="form-control" id="account" placeholder="Enter description">
+  </div>
+  <div class="mb-3">
+    <label for="password" class="form-label">Password:</label>
+    <input type="text" class="form-control" id="password" placeholder="Enter description">
+  </div>
+  <div class="mb-3">
+    <label for="file" class="form-label">File:</label>
+    <input type="file" class="form-control" id="file" name="file">
+  </div>
+  <button type="submit" id="form-button" class="btn btn-primary" onclick="addNewTeacher()">Submit</button>
+  <button type="submit" class="btn btn-primary" onclick="updateTeacher()">Update</button>
+</form>
+</div>
+
+</body>
+</html>
