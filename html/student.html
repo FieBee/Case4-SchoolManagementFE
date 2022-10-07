@@ -53,20 +53,14 @@
             }
         }
 
-        function getStudent(student) {
-            return `<tr><td >${student.firstName}</td>
-                <td >${student.lastName}</td>
-                <td >${student.birth}</td>
-                <td >${student.email}</td>
-                <td >${student.phone}</td>
-                <td >${student.account.account}</td>
-                <td >${student.account.password}</td>
-                <td >${student.active}</td>
-                <td >${student.image}</td>
-                <td><a href="${student.id}" onclick="showFormUpdate(this)">Edit</a></td>
-                <td><a href="${student.id}" onclick="deleteTeacher(this)">Delete</a></td>
+        function getCourse(course) {
+            return `<tr><td >${course.lessons}</td>
+                <td >${course.description}</td>
+                <td >${course.term}</td>
+                <td >${course.email}</td>
+                <td >${course.price}</td
                 </tr>`
-        }
+        }1
 
 
         function successHandler() {
@@ -76,25 +70,19 @@
                 success: function (data) {
                     let content =
                         `<tr>
-                        <td>First Name</td>
-                        <td>Last Name</td>
-                        <td>Birth Date</td>
-                        <td>Email</td>
-                        <td>Phone</td>
-                        <td>Account</td>
-                        <td>Password</td>
-                        <td>Status</td>
-                        <td>Image</td>
-                        <td>Edit</td>
-                        <td>Delete</td>
+                        <td>lessons</td>
+                        <td>description</td>
+                        <td>term</td>
+                        <td>email</td>
+                        <td>price</td>
                     </tr>`;
                     if (data == null) {
-                        document.getElementById("studentList").innerHTML = content;
+                        document.getElementById("courseList").innerHTML = content;
                     } else {
                         for (let i = 0; i < data.length; i++) {
-                            content += getStudent(data[i]);
+                            content += getCourse(data[i]);
                         }
-                        document.getElementById("studentList").innerHTML = content;
+                        document.getElementById("courseList").innerHTML = content;
                     }
                 }
             })
@@ -243,47 +231,44 @@
 </div>
 
 <!--  contact -->
-<div>
-<!--        class="contact"-->
-
-
-<!--    <form>-->
-<!--        <div class="form-group col-5">-->
-<!--            <label for="exampleInputEmail1">Email address</label>-->
-<!--            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">-->
-<!--            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>-->
-<!--        </div>-->
-<!--        <div class="form-group col-5">-->
-<!--            <label for="exampleInputPassword1">Password</label>-->
-<!--            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">-->
-<!--        </div><div class="form-group col-5">-->
-<!--            <label for="exampleInputPassword1">Password</label>-->
-<!--            <input type="password" class="form-control"  placeholder="Password">-->
-<!--        </div><div class="form-group col-5">-->
-<!--            <label for="exampleInputPassword1">Password</label>-->
-<!--            <input type="password" class="form-control"  placeholder="Password">-->
-<!--        </div><div class="form-group col-5">-->
-<!--            <label for="exampleInputPassword1">Password</label>-->
-<!--            <input type="password" class="form-control"  placeholder="Password">-->
-<!--        </div><div class="form-group col-5">-->
-<!--            <label for="exampleInputPassword1">Password</label>-->
-<!--            <input type="password" class="form-control"  placeholder="Password">-->
-<!--        </div>-->
-<!--        <div class="form-check col-5">-->
-<!--            <input type="checkbox" class="form-check-input" id="exampleCheck1">-->
-<!--            <label class="form-check-label" for="exampleCheck1">Check me out</label>-->
-<!--        </div>-->
-<!--        <button type="submit" class="btn btn-primary">Submit</button>-->
-<!--    </form>-->
-
-</div>
 
 
 
-<table id="studentList" class="table table-striped"></table>
+<p>alo course</p>
+<table id="courseList" class="table table-striped"></table>
+
+
 <form action="" id="form1">
 
 </form>
+
+
+
+
+    <div style="padding-left: 25%; margin-top: 50px" class="item-restaurant">
+        <a target="_blank" class=margin"item-content" >
+        <div class="img-restaurant">
+
+
+            <img src="https://images.foody.vn/res/g100001/1000000241/prof/s280x175/image-1e93bc8c-200908105705.jpeg" class="">
+        </div>
+        <div class="info-restaurant">
+            <div class="info-basic-res">
+                <h4 class="name-res" title="Tá Lả - Ăn Vặt, Mì Xào, Cơm Chiên &amp; Sinh Tố - Phan Văn Trị">Tá Lả - Ăn Vặt, Mì Xào, Cơm Chiên &amp; Sinh Tố - Phan Văn Trị</h4>
+                <div class="address-res" title="667/1 Phan Văn Trị, P. 7, Gò Vấp, TP. HCM">667/1 Phan Văn Trị, P. 7, Gò Vấp, TP. HCM</div>
+            </div>
+            <p class="content-promotion"><i class="fas fa-tag"></i> Deal 12k</p>
+            <div class="opentime-status">
+                <span class="stt online" title="Mở cửa" style="color: rgb(35, 152, 57); background-color: rgb(35, 152, 57);"></span>
+            </div>
+        </div>
+        </a>
+    </div>
+
+
+
+<!--courser-->
+
 
 
 
