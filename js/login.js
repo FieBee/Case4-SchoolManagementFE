@@ -22,13 +22,12 @@ function login() {
         success: function (data) {
             localStorage.setItem("token", data.token);
             localStorage.setItem("role",data.appRole[0].name);
+            localStorage.setItem("name",data.appRole[0].name);
 
-            if (data.appRole[0].name == "ROLE_ADMIN"){
-                location.href = "admin.html"
-            }else if(data.appRole[0].name == "ROLE_TEACHER"){
-                location.href = "teacher.html"
-            }else if(data.appRole[0].name == "ROLE_STUDENT"){
-                location.href = "student.html"
+            if (data.appRole[0].name == "ROLE_ADMIN"
+            || data.appRole[0].name == "ROLE_TEACHER"
+            || data.appRole[0].name == "ROLE_STUDENT"){
+                location.href = "http://localhost:63342/Case4-FE/html/index.html?_ijt=c7e3qmcqvivnt1ed98o663gir4&_ij_reload=RELOAD_ON_SAVE"
             }else {
                 location.href = "login.html"
             }
