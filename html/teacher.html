@@ -61,6 +61,8 @@
             return `<tr>
                 <td >${student.firstName}</td>
                 <td >${student.lastName}</td>
+                <td >${student.birth}</td>
+                <td >${student.address}</td>
                 <td >${student.email}</td>
                 <td >${student.phone}</td>
                 <td >${student.account.account}</td>
@@ -81,6 +83,8 @@
                         `<tr>
                         <td>First Name</td>
                         <td>Last Name</td>
+                        <td>Birth</td>
+                        <td>Address</td>
                         <td>Email</td>
                         <td>Phone</td>
                         <td>Account</td>
@@ -92,8 +96,8 @@
                     if (data == null) {
                         document.getElementById("studentList").innerHTML = content;
                     } else {
-                        for (let i = 0; i < data.length; i++) {
-                            content += getStudent(data[i]);
+                        for (let i = 0; i < data.content.length; i++) {
+                            content += getStudent(data.content[i]);
                         }
                         document.getElementById("studentList").innerHTML = content;
                     }
@@ -106,14 +110,18 @@
             //lay du lieu
             let firstName = $('#firstName').val();
             let lastName = $('#lastName').val();
+            let birth = $('#birth').val();
+            let address = $('#address').val();
             let email = $('#email').val();
             let phone = $('#phone').val();
             let account = $('#account').val();
             let password = $('#password').val();
             let active = $('#active').val();
-            let newTeacher = {
+            let newStudent = {
                 firstName: firstName,
                 lastName: lastName,
+                birth:birth,
+                address: address,
                 email: email,
                 phone: phone,
                 account: account,
@@ -126,11 +134,13 @@
                     'Content-Type': 'application/json'
                 },
                 type: "POST",
-                data: JSON.stringify(newTeacher),
+                data: JSON.stringify(newStudent),
                 //tên API
                 url: "http://localhost:8080/student",
                 //xử lý khi thành công
-                success: successHandler
+                success:function (data){
+                    successHandler();
+                }
 
             });
             //chặn sự kiện mặc định của thẻ
@@ -142,12 +152,13 @@
             $.ajax({
                 type: "DELETE",
                 //tên API
-                url: `http://localhost:8080/student/`+id,
+                url: `http://localhost:8080/student/${id}`,
                 //xử lý khi thành công
-                success: function (){
-                    successHandler()
+                success: function (data){
+                    console.log(id);
+                    successHandler();
                 }
-            });
+            })
             //chặn sự kiện mặc định của thẻ
             event.preventDefault();
         }
@@ -167,11 +178,13 @@
                     console.log(id);
                     $('#id').attr('value',`${data.id}`)
                     $('#firstName').attr('value',`${data.firstName}`)
-                    $('#birthDate').attr('value',`${data.lastName}`)
+                    $('#lastName').attr('value',`${data.lastName}`)
+                    $('#birth').attr('value',`${data.birth}`)
+                    $('#address').attr('value',`${data.address}`)
                     $('#email').attr('value',`${data.email}`)
                     $('#phone').attr('value',`${data.phone}`)
-                    $('#account').attr('value',`${data.account}`)
-                    $('#password').attr('value',`${data.password}`)
+                    $('#account').attr('value',`${data.account.account}`)
+                    $('#password').attr('value',`${data.account.password}`)
                     $('#active').attr('value',`${data.active}`)
                 }
             })
@@ -182,6 +195,8 @@
             let id = $('#id').val()
             let firstName = $('#firstName').val();
             let lastName = $('#lastName').val();
+            let address= $('#address').val();
+
             let email = $('#email').val();
             let phone = $('#phone').val();
             let account = $('#account').val();
@@ -192,8 +207,12 @@
                 lastName: lastName,
                 email: email,
                 phone: phone,
-                account: account,
-                password: password,
+                address:address,
+                account: {
+                    "id": 3,
+                    account: account,
+                    password: password,
+                },
                 active: active,
             }
             $.ajax({
@@ -203,7 +222,7 @@
                 },
                 type: "PUT",
                 url: `http://localhost:8080/student/${id}`,
-                data:JSON.stringify(student),
+                data:JSON.stringify(teacher),
                 success: function (data) {
                     console.log(id);
                     successHandler();
@@ -277,6 +296,10 @@
             <input type="text" class="form-control" id="birth" placeholder="Enter birth">
         </div>
         <div class="mb-3">
+            <label for="lastName" class="form-label">Address:</label>
+            <input type="text" class="form-control" id="address" placeholder="Enter address">
+        </div>
+        <div class="mb-3">
             <label for="email" class="form-label">Email:</label>
             <input type="text" class="form-control" id="email" placeholder="Enter email">
         </div>
@@ -291,6 +314,10 @@
         <div class="mb-3">
             <label for="password" class="form-label">Password:</label>
             <input type="text" class="form-control" id="password" placeholder="Enter password">
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Status:</label>
+            <input type="text" class="form-control" id="active" placeholder="Enter status">
         </div>
         <button type="submit" id="form-button" class="btn btn-primary" onclick="addNewStudent()">Submit</button>
         <button type="submit" class="btn btn-primary" onclick="updateStudent()">Update</button>

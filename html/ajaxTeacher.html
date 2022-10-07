@@ -21,12 +21,13 @@
     }
 
     function getTeacher(teacher) {
-      return `<tr><td >${teacher.firstName}</td><td >${teacher.lastName}</td><td >${teacher.birth}</td><td >${teacher.email}</td><td >${teacher.phone}</td>
+      return `<tr>
+<td >${teacher.firstName}</td><td >${teacher.lastName}</td><td >${teacher.birth}</td><td >${teacher.email}</td><td >${teacher.phone}</td>
 
-
-
-                <td >${teacher.account.account}</td><td >${teacher.account.password}</td>
-                <td >${teacher.active}</td><td >${teacher.image}</td>
+                <td >${teacher.account.account}</td>
+                <td >${teacher.account.password}</td>
+                <td >${teacher.active}</td>
+                <td >${teacher.image}</td>
 
                 <td><a href="${teacher.id}" onclick="showFormUpdate(this)">Edit</a></td>
                 <td><a href="${teacher.id}" onclick="deleteTeacher(this)">Delete</a></td>
