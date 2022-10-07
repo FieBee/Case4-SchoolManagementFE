@@ -65,9 +65,9 @@
         let userName = localStorage.getItem("name");
         if (userName == "ROLE_ADMIN") {
             alert("admin")
-            window.location.href = "http://localhost:63342/Case4-FE/html/ajaxTeacher.html?_ijt=1iblmr792orr81l8mf51jn601e&_ij_reload=RELOAD_ON_SAVE"
+            window.location.href = "http://localhost:63342/Case4-FE/html/ajaxTeacher.html?_ijt=1iblmr792orr81l8mf51jn601e&_ij"
         }else if (userName == "ROLE_TEACHER") {
-            window.location.href = "http://localhost:63342/Case4-FE/html/teacher.html?_ijt=1iblmr792orr81l8mf51jn601e&_ij_reload=RELOAD_ON_SAVE"
+            window.location.href = "http://localhost:63342/Case4-FE/html/teacher.html?_ijt=1iblmr792orr81l8mf51jn601e&_ij"
         }else if (userName == "ROLE_STUDENT") {
             alert("di toi student")
             window.location.href = "http://localhost:63342/Case4-FE/html/student.html?_ijt=ambmh8fhkeba75bao47d5l6hc9&_ij";
@@ -89,6 +89,7 @@
 
             // alert(userName)
         }
+
         return;
     }
     checkLogin()
