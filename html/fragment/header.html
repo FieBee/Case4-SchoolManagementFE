@@ -62,21 +62,27 @@
 
 <script>
     function goProfile(){
+        let accountName = localStorage.getItem("accountname");
         let userName = localStorage.getItem("name");
-        if (userName == "ROLE_ADMIN") {
+        if (accountName == "ROLE_ADMIN") {
             alert("admin")
             window.location.href = "http://localhost:63342/Case4-FE/html/ajaxTeacher.html?_ijt=1iblmr792orr81l8mf51jn601e&_ij"
-        }else if (userName == "ROLE_TEACHER") {
+        }else if (accountName == "ROLE_TEACHER") {
             window.location.href = "http://localhost:63342/Case4-FE/html/teacher.html?_ijt=1iblmr792orr81l8mf51jn601e&_ij"
-        }else if (userName == "ROLE_STUDENT") {
+        }else if (accountName == "ROLE_STUDENT") {
             alert("di toi student")
             window.location.href = "http://localhost:63342/Case4-FE/html/student.html?_ijt=ambmh8fhkeba75bao47d5l6hc9&_ij";
             // window.location = "student.html";
         }else {
-            document.getElementById("name").innerText = "Login"
-            console.log("Dang nhap deeee")
+            if (userName){
+                document.getElementById("name").innerText = "userName"
+            }else {
+                document.getElementById("name").innerText = "Login"
+                console.log("Dang nhap deeee")
+            }
+
         }
-        return;
+        // event.preventDefault();
     }
     function checkLogin(){
         // let token = localStorage.getItem("token");
@@ -90,10 +96,42 @@
             // alert(userName)
         }
 
-        return;
+        event.preventDefault();
     }
+
+
+    function getStudent(){
+        let studentalo = localStorage.getItem("accountname");
+        console.log(studentalo);
+        // console.log("alosooo");
+        $.ajax({
+            type: "GET",
+            headers: {
+
+                //kiểu dữ liệu nhận về
+                'Accept': 'application/json',
+                // kiểu truyền đi
+                'Content-Type': 'application/json'
+            },
+
+            url: `http://localhost:8080/student/getStudent/${studentalo}`,
+
+            //xử lý khi thành công
+            success: function (data) {
+                // console.log("aloasdasd")
+                localStorage.setItem("course", JSON.stringify(data.courses));
+                localStorage.setItem("name",data.lastName);
+                localStorage.setItem("student", JSON.stringify(data));
+                // console.log(data.lastName)
+                // return data
+
+            }
+        })
+    }
+
     checkLogin()
-    // goProfile()
+    getStudent();
+
 </script>
 
 
