@@ -242,11 +242,11 @@
                     'Content-Type': 'application/json'
                 },
                 type:"GET",
-                url: `http://localhost:8080/student/search=${search}`,
+                url: `http://localhost:8080/student?search=${search}`,
                 success:function (data){
+                    console.log(data);
 
                     let str = '    <tr>\n' +
-                        '        <td>ID</td>\n' +
                         '        <td>First Name</td>\n' +
                         '        <td>Last Name</td>\n' +
                         '        <td>Birth</td>\n' +
@@ -255,12 +255,17 @@
                         '        <td>Phone</td>\n' +
                         '        <td>Account</td>\n' +
                         '        <td>Password</td>\n' +
+                        '        <td>Active</td>\n' +
+                        '        <td>Edit</td>\n' +
+                        '        <td>Delete</td>\n' +
                         '    </tr>';
 
                     for (let i = 0; i < data.content.length; i++) {
                         str += getStudent(data.content[i]);
+                        console.log("hello")
                     }
-                    document.getElementById('students').innerHTML = str;
+                    console.log(str)
+                    document.getElementById('studentList').innerHTML = str;
                 }
             })
             event.preventDefault();
