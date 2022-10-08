@@ -129,19 +129,37 @@
                 type: "GET",
                 url: "http://localhost:8080/student",
                 success: function (data) {
-                    let content = ""
+
+
+
+                    let content =
+                        `<tr>
+                        <td>First Name</td>
+                        <td>Last Name</td>
+                        <td>Birth Date</td>
+                        <td>Email</td>
+                        <td>Phone</td>
+                        <td>Account</td>
+                        <td>Password</td>
+                        <td>Status</td>
+                        <td>Image</td>
+                        <td>Edit</td>
+                        <td>Delete</td>
+                        <td>View detail</td>
+                    </tr>`;
+
                     if (data == null) {
                         document.getElementById("courseList").innerHTML = content;
                     } else {
-<<<<<<< HEAD
+
                         for (let i = 0; i < data.content.length; i++) {
                             content += getStudent(data.content[i]);
                         }
                         document.getElementById("studentList").innerHTML = content;
-=======
+
                         content += getCourse();
                         document.getElementById("courseList").innerHTML = content;
->>>>>>> student
+
                     }
                 }
             })
@@ -369,7 +387,7 @@
 <!--            </div>-->
 <!--        </div>-->
 <!--        </a>-->
-<!--    </div>-->
+    </div>
 
 
 
