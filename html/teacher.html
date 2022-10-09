@@ -70,7 +70,7 @@
                 <td >${student.active}</td>
                 <td><a href="${student.id}" onclick="showFormUpdate(this)">Edit</a></td>
                 <td><a href="${student.id}" onclick="deleteStudent(this)">Delete</a></td>
-                <td><a href="${student.id}" onclick="${student.html}">Detail</a></td>
+                <td><a href="${student.id}" >Detail</a></td>
                 </tr>`
         }
 
@@ -273,21 +273,21 @@
             event.preventDefault();
         }
 
-        function studentDetail(element){
-            let id = element.getAttribute("href");
-            $.ajax({
-                type: "DELETE",
-                //tên API
-                url: `http://localhost:8080/student/${id}`,
-                //xử lý khi thành công
-                success: function (data){
-                    console.log(id);
-                    successHandler();
-                }
-            })
+        function studentDetail(){
+            // let id = element.getAttribute("href");
+            // $.ajax({
+            //     type: "DELETE",
+            //     //tên API
+            //     url: `http://localhost:8080/student/${id}`,
+            //     //xử lý khi thành công
+            //     success: function (data){
+            //         console.log(id);
+            //         successHandler();
+            //     }
+            }
             //chặn sự kiện mặc định của thẻ
-            event.preventDefault();
-        }
+            // event.preventDefault();
+
 
     </script>
 </head>
