@@ -180,7 +180,72 @@
         }
 
 
+        function courseNotYet(element){
 
+            let search= element.getAttribute("href");
+            console.log(search)
+            $.ajax({
+                headers:{
+                    'Accept':'application/json',
+                    'Content-Type': 'application/json'
+                },
+                type:"GET",
+                url: `http://localhost:8080/course/${search}`,
+
+                success:function (data){
+
+                    let str =
+                        "<div style='float: left; height:250px' class=\"col-8\">\n" +
+                        "<div class=\"item-restaurant-row\" style=\"height: 0px; left: 0px;  width: 100%;\">\n" +
+                        "        <div style='padding-left: 250px' class=\"row\">\n" +
+                        "            <div class=\"col-auto item-restaurant-img\">\n" +
+                        "                <img src=\"https://images.foody.vn/res/g94/930342/s120x120/dee0f8e0-29ee-46e1-a5ec-bb7fc6d7da54.jpg\" alt=\"Bánh hỏi heo quay Chả Giò\" width=\"200\" height=\"200\">\n" +
+                        "                </button>\n" +
+                        "            </div>\n" +
+                        "            <div class=\"col item-restaurant-info\">\n" +
+                        "                <h2 class=\"item-restaurant-name\"> "+ data.term +"</h2>\n" +
+                        "                <div class=\"item-restaurant-desc\">"+data.description+"</div>\n " +
+                        "            </div>\n" +
+                        "            <div class=\"col-auto item-restaurant-more\">\n" +
+                        "                <div class=\"row \">\n" +
+                        "                    <div class=\"col-auto product-price\">\n" +
+                        "                        <div class=\"current-price\">"+data.price+"<span style=\"font-weight: bolder;position: relative;top: -9px;font-size: 10px;right: 0;\">đ</span></div>\n" +
+                        "                        <div><button onclick='buidCourse(this)' href='"+ data.id +"' type=\"button\" class=\"btn btn-primary\">Thanh toán</button></div> " +
+                        "                   </div>\n" +
+                        "                </div>\n" +
+                        "            </div>\n" +
+                        "        </div>\n" +
+                        "    </div>" +
+                        "</div> <div></div>"
+
+                    document.getElementById('courseList').innerHTML = str;
+                }
+            })
+            event.preventDefault();
+        }
+
+        function buidCourse(element){
+            let courseId= element.getAttribute("href");
+            let student = JSON.parse(localStorage.getItem("student"))
+            studentId = student.id
+            console.log("studentID" + studentId)
+            console.log("courseId" +courseId)
+            $.ajax({
+                headers:{
+                    'Accept':'application/json',
+                    'Content-Type': 'application/json'
+                },
+                type:"POST",
+                url: `http://localhost:8080/student/addCourse/${studentId}/${courseId}`,
+
+                success:function (data){
+                    alert("Mua khoá học thành công!!");
+                },
+                error: function (){
+                    alert("Bạn đã mua khóa học này gòyy!!")
+                }
+        })
+        }
 
 
 
@@ -260,10 +325,10 @@
                     "<div style='float: left' class=\"col-6\">\n" +
                     " <a href='"+ course[i].id +"' onclick='searchCourse(this)'>   " +
                     // " <input value='"+ course[i].id +"' id='courseId' type='hidden'>   " +
-                    "<div class=\"item-restaurant-row\" style=\"height: 250px;padding-top: 20px ;margin:  0 50px 0px; left: 0px;  width: 100%;\">\n" +
-                    "        <div style='padding-left: 40px' class=\"row\">\n" +
+                    "<div class=\"item-restaurant-row\" style=\"height: 250px;padding-top: 20px ;margin:  0 0px 0px; left: 0px;  width: 100%;\">\n" +
+                    "        <div style='padding-left: 30px' class=\"row\">\n" +
                     "            <div class=\"col-auto item-restaurant-img\">\n" +
-                    "                <img src=\"https://images.foody.vn/res/g94/930342/s120x120/dee0f8e0-29ee-46e1-a5ec-bb7fc6d7da54.jpg\" alt=\"Bánh hỏi heo quay Chả Giò\" width=\"200\" height=\"200\">\n" +
+                    "                <img src=\"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3054aAwgy_5J00ygoxXaJRms0M9trMZutvKkyBJJU2ZUWqvHhPMBvB8Q0Z6VZMb5_cXc&usqp=CAU\" alt=\"Bánh hỏi heo quay Chả Giò\" width=\"200\" height=\"200\">\n" +
                     "                </button>\n" +
                     "            </div>\n" +
                     "            <div class=\"col item-restaurant-info\">\n" +
@@ -321,26 +386,34 @@
                 type:"GET",
                 url: `http://localhost:8080/course`,
                 success: function (data) {
-                    let content =
-                        `<tr>
-                        <td>First Name</td>
-                        <td>Last Name</td>
-                        <td>Birth</td>
-                        <td>Address</td>
-                        <td>Email</td>
-                    </tr>`;
+                    console.log("aasdasdad")
+                    let content ="";
                     if (data == null) {
                         document.getElementById("studentList").innerHTML = content;
                     } else {
-                        for (let i = 0; i < data.content.length; i++) {
-                            content += getStudent(data.content[i]);
+                        for (let i = 0; i < data.length; i++) {
+                            content +=
+                            "<div style='float: left' class='col-2 item-restaurant-row'>\n" +
+                                "<a s onclick='courseNotYet(this)' href='"+ data[i].id +"'" +
+                                "<div style=\"width: 240px; margin: 20px 0 20px 40px \" class=\"item-restaurant  \">\n" +
+                                "<div class=\"img-restaurant\">\n" +
+                                "<img src=\"https://stickershop.line-scdn.net/stickershop/v1/product/1027471/LINEStorePC/main.png;compress=true\" class=\"\">\n" +
+                                "</div>\n" +
+                                "<div class=\"info-restaurant info-basic-res\">\n" +
+                                "<h4 class=\"name-res\" title=\"Chốt deal quán ngon - Freeship 0đ\">" + data[i].term+"</h4>\n" +
+                                "<div class=\"txt-blue font12\">" + data[i].price+"<span style=\"font-weight: bolder;position: relative;top: -9px;font-size: 10px;right: 0;\">đ</span></div>\n" +
+                                " </div>\n" +
+                                "</div>\n" +
+                                "</a>" +
+                            "</div>";
                         }
-                        document.getElementById("studentList").innerHTML = content;
+                        document.getElementById("showAllCourse").innerHTML = content;
                     }
                 }
             })
 
         }
+        allCourse();
     </script>
 
 </head>
@@ -427,8 +500,8 @@
 
 
 <div class=""><table id="courseList" class="table table-striped"></table></div>
-    <div>
-        <table id="studentList" class="table table-striped"></table>
+    <div id="studentList">
+<!--        <table  class="table table-striped"></table>-->
     </div>
 </div>
 
@@ -447,82 +520,11 @@
 
 <div>
     <table >
-        <tr>
-            <td>
-                <div style="width: 240px; margin-left: 40px" class="item-restaurant  ">
-                    <a target="_blank" class="item-content" title="Chốt deal quán ngon - Freeship 0đ" href="/bo-suu-tap/chot-deal-quan-ngon---freeship-0d">
-                        <div class="img-restaurant">
-                            <img src="https://images.foody.vn/delivery/collection/s320x200/image-e8472e43-221003100928.jpeg" class="">
-                        </div>
-                        <div class="info-restaurant info-basic-res">
-                            <h4 class="name-res" title="Chốt deal quán ngon - Freeship 0đ">Chốt deal quán ngon - Freeship 0đ</h4>
-                            <div class="txt-blue font12">200 địa điểm</div>
-                        </div>
-                    </a>
-                </div>
-            </td><td>
-                <div style="width: 240px; margin-left: 40px" class="item-restaurant  ">
-                    <a target="_blank" class="item-content" title="Chốt deal quán ngon - Freeship 0đ" href="/bo-suu-tap/chot-deal-quan-ngon---freeship-0d">
-                        <div class="img-restaurant">
-                            <img src="https://images.foody.vn/delivery/collection/s320x200/image-e8472e43-221003100928.jpeg" class="">
-                        </div>
-                        <div class="info-restaurant info-basic-res">
-                            <h4 class="name-res" title="Chốt deal quán ngon - Freeship 0đ">Chốt deal quán ngon - Freeship 0đ</h4>
-                            <div class="txt-blue font12">200 địa điểm</div>
-                        </div>
-                    </a>
-                </div>
-            </td><td>
-                <div style="width: 240px; margin-left: 40px" class="item-restaurant  ">
-                    <a target="_blank" class="item-content" title="Chốt deal quán ngon - Freeship 0đ" href="/bo-suu-tap/chot-deal-quan-ngon---freeship-0d">
-                        <div class="img-restaurant">
-                            <img src="https://images.foody.vn/delivery/collection/s320x200/image-e8472e43-221003100928.jpeg" class="">
-                        </div>
-                        <div class="info-restaurant info-basic-res">
-                            <h4 class="name-res" title="Chốt deal quán ngon - Freeship 0đ">Chốt deal quán ngon - Freeship 0đ</h4>
-                            <div class="txt-blue font12">200 địa điểm</div>
-                        </div>
-                    </a>
-                </div>
-            </td><td>
-                <div style="width: 240px; margin-left: 40px" class="item-restaurant  ">
-                    <a target="_blank" class="item-content" title="Chốt deal quán ngon - Freeship 0đ" href="/bo-suu-tap/chot-deal-quan-ngon---freeship-0d">
-                        <div class="img-restaurant">
-                            <img src="https://images.foody.vn/delivery/collection/s320x200/image-e8472e43-221003100928.jpeg" class="">
-                        </div>
-                        <div class="info-restaurant info-basic-res">
-                            <h4 class="name-res" title="Chốt deal quán ngon - Freeship 0đ">Chốt deal quán ngon - Freeship 0đ</h4>
-                            <div class="txt-blue font12">200 địa điểm</div>
-                        </div>
-                    </a>
-                </div>
-            </td>
+        <tr id="showAllCourse">
 
         </tr>
     </table>
 
-    <div style="float: left" class="item-restaurant col-3">
-        <a target="_blank" class="item-content" title="Chốt deal quán ngon - Freeship 0đ" href="/bo-suu-tap/chot-deal-quan-ngon---freeship-0d">
-            <div class="img-restaurant">
-                <img src="https://images.foody.vn/delivery/collection/s320x200/image-e8472e43-221003100928.jpeg" class="">
-            </div>
-            <div class="info-restaurant info-basic-res">
-                <h4 class="name-res" title="Chốt deal quán ngon - Freeship 0đ">Chốt deal quán ngon - Freeship 0đ</h4>
-                <div class="txt-blue font12">200 địa điểm</div>
-            </div>
-        </a>
-    </div>
-    <div style="float: left" class="item-restaurant col-3">
-        <a target="_blank" class="item-content" title="Chốt deal quán ngon - Freeship 0đ" href="/bo-suu-tap/chot-deal-quan-ngon---freeship-0d">
-            <div class="img-restaurant">
-                <img src="https://images.foody.vn/delivery/collection/s320x200/image-e8472e43-221003100928.jpeg" class="">
-            </div>
-            <div class="info-restaurant info-basic-res">
-                <h4 class="name-res" title="Chốt deal quán ngon - Freeship 0đ">Chốt deal quán ngon - Freeship 0đ</h4>
-                <div class="txt-blue font12">200 địa điểm</div>
-            </div>
-        </a>
-    </div>
 </div>
 
 <!--courser-->
