@@ -239,7 +239,10 @@
                 url: `http://localhost:8080/student/addCourse/${studentId}/${courseId}`,
 
                 success:function (data){
-                    alert("Mua khoá học thành công");
+                    alert("Mua khoá học thành công!!");
+                },
+                error: function (){
+                    alert("Bạn đã mua khóa học này gòyy!!")
                 }
         })
         }
