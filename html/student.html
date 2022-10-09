@@ -30,6 +30,8 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
     <link href='https://css.gg/chevron-down-o.css' rel='stylesheet'>
     <script src="https://kit.fontawesome.com/78bb747893.js" crossorigin="anonymous"></script>
+
+
     <script
             src="https://code.jquery.com/jquery-3.3.1.js"
             integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
@@ -40,7 +42,10 @@
         $(function () {
             $("#header").load("fragment/header.html");
             $("#footer").load("fragment/footer.html");
+            // checkLogin();
         });
+
+
         function update(){
             alert("Đang bảo trì!!")
             window.location.href = "http://localhost:63342/Case4-FE/html/student.html?_ijt=s9c6757ssdbp0eingu2giaaeug&_ij_reload=RELOAD_ON_SAVE"
@@ -224,12 +229,46 @@
             event.preventDefault();
         }
 
+
+        function createPayment(amount){
+            let today = new Date()
+            let alo = today.getDate()
+            if (alo<10){
+                alo = "0"+ today.getDate()
+            }
+            let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+alo;
+
+            let newPayment = {
+                paymentDate: date,
+                amount: amount,
+                status: "Đã thanh toán"
+            }
+            $.ajax({
+                headers:{
+                    'Accept':'application/json',
+                    'Content-Type': 'application/json'
+                },
+                type:"POST",
+                data: JSON.stringify(newPayment),
+                url: `http://localhost:8080/payment`,
+
+                success:function (data){
+                    return data.id
+                    console.log(data.id + "dataID")
+                },
+                error:function (){
+                    alert("Loi create payment")
+                }
+
+            })
+        }
+
         function buidCourse(element){
             let courseId= element.getAttribute("href");
             let student = JSON.parse(localStorage.getItem("student"))
             studentId = student.id
-            console.log("studentID" + studentId)
-            console.log("courseId" +courseId)
+            // console.log("studentID" + studentId)
+            // console.log("courseId" +courseId)
             $.ajax({
                 headers:{
                     'Accept':'application/json',
@@ -240,11 +279,36 @@
 
                 success:function (data){
                     alert("Mua khoá học thành công!!");
-                },
-                error: function (){
+                    let paymentArr = new Array()
+                    paymentArr = localStorage.getItem("payment")
+                    console.log(paymentArr+" mang payment")
+                    $.ajax({
+                            headers:{
+                                'Accept':'application/json',
+                                'Content-Type': 'application/json'
+                            },
+                            type:"GET",
+                            url: `http://localhost:8080/course/${courseId}`,
+
+                            success:function (data){
+
+                                console.log("course "+data.price)
+
+                                let paymentId = createPayment(data.price)
+
+                                console.log(paymentId)
+                                console.log("???")
+                            },
+
+                })
+
+        //askdkasdkasda
+        },
+                error:function alo(){
                     alert("Bạn đã mua khóa học này gòyy!!")
                 }
-        })
+            })
+            event.preventDefault();
         }
 
 
@@ -307,10 +371,12 @@
                         str += getStudent(data.content[i]);
                         console.log("hello")
                     }
+                    event.preventDefault();
                     document.getElementById('student').innerHTML = str;
                 }
             })
             // successHandler();
+            event.preventDefault();
         }
 
 
@@ -350,6 +416,7 @@
             }
 
             return content;
+            event.preventDefault();
         }
 
 
@@ -371,7 +438,6 @@
                     event.preventDefault();
                 }
             })
-
         }
         successHandler();
 
@@ -443,43 +509,23 @@
 <div  >
 
     <div style="float: left" class="col-4 text-center ">
-        <a  href="" onclick="successHandler()"><h1 class="dichuotvao">Course Of Me</h1></a>
+        <a  href="#" onclick="successHandler()"><h1 class="dichuotvao">Course Of Me</h1></a>
+
     </div>
 
     <div style="float: left" class="col-4 text-center ">
-        <a href="" onclick="showProfile()" ><h1 class="dichuotvao">Profile</h1></a>
+        <a href="#" onclick="showProfile()" >
+            <h1 class="dichuotvao">Profile</h1></a>
     </div>
 
     <div style="float: left" class="col-4 text-center ">
-        <a href="" onclick="showHistory()" >
-            <h1 class="dichuotvao">History</h1>
-        </a>
+
+
+        <a onclick="showHistory()" href="#"><h1 class="dichuotvao">History</h1></a>
     </div>
 </div>
 
-    <script !src="">
-        function showHistory(){
-            let payment = new Array()
-            payment = JSON.parse(localStorage.getItem("payment"))
-            let content =
-                '     <tr>\n' +
-                '        <td>Payment Date</td>\n' +
-                '        <td>Amount</td>\n' +
-                '        <td>Status</td>\n' +
-                '    </tr>'
 
-            for (let i = 0; i < payment.length; i++) {
-                content +=
-                    '     <tr>\n' +
-                    '        <td>'+ payment[i].paymenDate +'</td>\n' +
-                    '        <td>'+ payment[i].amount +''</td>\n' +
-                    '        <td>'+ payment[i].status +''</td>\n' +
-                    '    </tr>'
-            }
-            console.log(content)
-            document.getElementById("courseList").innerHTML = content
-        }
-    </script>
 
 
     <style>
@@ -545,5 +591,31 @@
 <!-- sidebar -->
 <script src="../js/jquery.mCustomScrollbar.concat.min.js"></script>
 <script src="../js/custom.js"></script>
+
+<script >
+    function showHistory(){
+        let payment = new Array()
+        payment = JSON.parse(localStorage.getItem("payment"))
+        console.log(payment)
+        let content =
+            '     <tr>\n' +
+            '        <td>Payment Date</td>\n' +
+            '        <td>Amount</td>\n' +
+            '        <td>Status</td>\n' +
+            '    </tr>'
+
+        for (let i = 0; i < payment.length; i++) {
+            content +=
+                '     <tr>\n' +
+                '        <td>'+ payment[i].paymentDate +'</td>\n' +
+                '        <td>'+ payment[i].amount +'</td>\n' +
+            '        <td>'+ payment[i].status +'</td>\n' +
+            '    </tr>'
+        }
+        console.log(content)
+        document.getElementById("courseList").innerHTML = content
+        event.preventDefault();
+    }
+</script>
 </body>
 </html>

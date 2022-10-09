@@ -1,20 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!--    <meta charset="UTF-8">-->
-
-<!--    <title>Title</title>-->
-<!--    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>-->
-<!--    &lt;!&ndash; Latest compiled and minified CSS &ndash;&gt;-->
-<!--&lt;!&ndash;    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">&ndash;&gt;-->
-<!--    &lt;!&ndash; Latest compiled JavaScript &ndash;&gt;-->
-<!--&lt;!&ndash;    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>&ndash;&gt;-->
-<!--    <link rel="stylesheet" href="admin.css">-->
-<!--    <script-->
-<!--            src="https://code.jquery.com/jquery-3.3.1.js"-->
-<!--            integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="-->
-<!--            crossorigin="anonymous">-->
-<!--    </script>-->
     <head >
         <!-- basic -->
         <meta charset="utf-8">
@@ -65,20 +51,9 @@
             checkLogin();
         </script>
     </head>
-</head>
 
-    <script>
-        $(function () {
-            $("#header").load("fragment/header.html");
-            $("#footer").load("fragment/footer.html");
-        });
-        checkLogin();
-    </script>
     <script>
         let index = 0;
-        <p>NỀN TẢNG HỌC TIẾNG NHẬT NHIỀU NGƯỜI THEO HỌC NHẤT VIỆT NAM </p>
-
-        <h3>Bắt đầu bằng việc học tiếng nhật tại DC Nihongo, chúng tôi cùng học trò của mình thắp sáng lên và trao giữ lửa học tập hướng tới xây dựng một nền "giáo dục thay đổi một đời"</h3>
 
         function displayFormCreate() {
             document.getElementById("form1").reset()
@@ -356,12 +331,11 @@
             //chặn sự kiện mặc định của thẻ
             // event.preventDefault();
 
-
     </script>
 
-<body>
+<body class="main-layout inner_header about_page">
 <header id="header" style="z-index: initial"></header>
-<div style="position: absolute;top: 500px">
+
 <div class="container">
 
     <h1>Class List</h1>
@@ -421,8 +395,7 @@
         <button type="submit" class="btn btn-primary" onclick="updateStudent()">Update</button>
     </form>
 </div>
-</div>
-    <h1>Đây kà trang tét chè</h1>
-<footer id="footer" style="position: absolute;top: 1000px"></footer>
+
+<footer id="footer"></footer>
 </body>
 </html>
