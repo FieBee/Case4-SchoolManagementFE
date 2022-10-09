@@ -67,42 +67,91 @@
     }
     successHandler();
 
-    function addNewTeacher() {
-      //lay du lieu
-      let firstName = $('#firstName').val();
-      let lastName = $('#lastName').val();
-      let birthDate = $('#birthDate').val();
-      let email = $('#email').val();
-      let phone = $('#phone').val();
+
+
+    function addNewAccount(){
+
       let account = $('#account').val();
       let password = $('#password').val();
-      let active = $('#active').val();
-      let newTeacher = {
-        firstName: firstName,
-        lastName: lastName,
-        birthDate: birthDate,
-        email: email,
-        phone: phone,
+
+
+
+      let newAccount = {
         account: account,
-        password: password,
-        active: active,
-      };
+        password: password
+      }
+
+
+      // console.log(newAccount)
       $.ajax({
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
         type: "POST",
-        data: JSON.stringify(newTeacher),
+        data: JSON.stringify(newAccount),
         //tên API
-        url: "/teacher",
+        url: "http://localhost:8080/account",
         //xử lý khi thành công
-        success: successHandler
+        success: function (data){
+          console.log("tao account thanh cong")
+          console.log(data.id)
 
-      });
-      //chặn sự kiện mặc định của thẻ
+          let firstName = $('#firstName').val();
+          let lastName = $('#lastName').val();
+          let birthDate = $('#birthDate').val();
+          let email = $('#email').val();
+          let phone = $('#phone').val();
+          let active = $('#active').val();
+
+          let newTeacher = {
+            firstName: firstName,
+            lastName: lastName,
+            birthDate: birthDate,
+            email: email,
+            phone: phone,
+            account: {
+              id : data.id
+            },
+            active: active,
+          };
+
+          $.ajax({
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            type: "POST",
+            data: JSON.stringify(newTeacher),
+            //tên API
+            url: "http://localhost:8080/teacher",
+            //xử lý khi thành công
+            success: function (data){
+              alert("thanhcong")
+              console.log(data)
+            }
+
+
+          })
+          event.preventDefault();
+      }
+
+    })
       event.preventDefault();
     }
+
+
+
+    // function addNewTeacher() {
+    //   let newAccount = addNewAccount();
+    //   //lay du lieu
+    //
+    //
+    //
+    //
+    //
+    //   });
+    //   //chặn sự kiện mặc định của thẻ
 
     function deleteTeacher(element){
       let id = element.getAttribute("href");
@@ -116,7 +165,7 @@
         }
       });
       //chặn sự kiện mặc định của thẻ
-      event.preventDefault();
+
     }
 
     function showFormUpdate(element){
@@ -228,7 +277,7 @@
     <label for="file" class="form-label">File:</label>
     <input type="file" class="form-control" id="file" name="file">
   </div>
-  <button type="submit" id="form-button" class="btn btn-primary" onclick="addNewTeacher()">Submit</button>
+  <button type="submit" id="form-button" class="btn btn-primary" onclick="addNewAccount()">Submit</button>
   <button type="submit" class="btn btn-primary" onclick="updateTeacher()">Update</button>
 </form>
 </div>
