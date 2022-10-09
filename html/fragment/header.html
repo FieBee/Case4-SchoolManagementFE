@@ -62,7 +62,7 @@
 
 <script>
     function goProfile(){
-        let accountName = localStorage.getItem("accountname");
+        let accountName = localStorage.getItem("role");
         let userName = localStorage.getItem("name");
         if (accountName == "ROLE_ADMIN") {
             alert("admin")
@@ -72,10 +72,10 @@
         }else if (accountName == "ROLE_STUDENT") {
             alert("di toi student")
             window.location.href = "http://localhost:63342/Case4-FE/html/student.html?_ijt=ambmh8fhkeba75bao47d5l6hc9&_ij";
-            // window.location = "student.html";
         }else {
-            if (userName){
-                document.getElementById("name").innerText = "userName"
+            window.location.href = "http://localhost:63342/Case4-FE/html/login.html?_ijt=h73ll5dv4vl65rtfuaggopg31&_ij_reload=RELOAD_ON_SAVE"
+            if (!userName == null){
+                document.getElementById("name").innerText = userName
             }else {
                 document.getElementById("name").innerText = "Login"
                 console.log("Dang nhap deeee")
@@ -88,6 +88,7 @@
         // let token = localStorage.getItem("token");
         let userName = localStorage.getItem("name")
         if (userName == null){
+
             document.getElementById("name").innerText = "Login"
         }else {
             document.getElementById("name").innerHTML = userName
@@ -120,18 +121,19 @@
             success: function (data) {
                 // console.log("aloasdasd")
                 localStorage.setItem("course", JSON.stringify(data.courses));
+                localStorage.setItem("payment", JSON.stringify(data.payment));
                 localStorage.setItem("name",data.lastName);
                 localStorage.setItem("student", JSON.stringify(data));
+                checkLogin()
                 // console.log(data.lastName)
                 // return data
 
             }
         })
+        event.preventDefault();
     }
 
-    checkLogin()
     getStudent();
 
 </script>
-
 

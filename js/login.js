@@ -37,7 +37,7 @@ function login() {
             }else {
                 location.href = "login.html"
             }
-            // location.href = "teacher.html"
+
             console.log(data)
             // getStudent()
 
