@@ -78,21 +78,11 @@ checkLogin()
 </script>
 </head>
 
-
-
-
-
-
-
-
 <script>
-  let index = 0;
 
   function displayFormCreate() {
     document.getElementById("form1").reset()
     document.getElementById("form1").hidden = false;
-    document.getElementById("form-button").onclick = function () {
-    }
   }
 
   function getTeacher(teacher) {
@@ -115,6 +105,7 @@ checkLogin()
       type: "GET",
       url: "http://localhost:8080/teacher",
       success: function (data) {
+        console.log(data)
         let content =
                 `<tr>
                         <td>First Name</td>
@@ -132,8 +123,8 @@ checkLogin()
         if (data == null) {
           document.getElementById("teacherList").innerHTML = content;
         } else {
-          for (let i = 0; i < data.length; i++) {
-            content += getTeacher(data[i]);
+          for (let i = 0; i < data.content.length; i++) {
+            content += getTeacher(data.content[i]);
           }
           document.getElementById("teacherList").innerHTML = content;
         }
@@ -205,19 +196,74 @@ checkLogin()
   }
 
 
+  //// Upload file
+
+  // function addNewAccount(){
+  //   let formData = new FormData();
+  //   let account = $('#account').val();
+  //   let password = $('#password').val();
+  //   formData.append('account', account)
+  //   formData.append('password', password)
+  //   // console.log(newAccount)
+  //   $.ajax({
+  //     contentType: false,
+  //     processData: false,
+  //     enctype: 'multipart/form-data',
+  //     dataType: "json",
+  //     type: "POST",
+  //     url: "http://localhost:8080/account",
+  //     data: formData,
+  //
+  //     success: function (data){
+  //       console.log("tao account thanh cong")
+  //       console.log(data.id)
+  //
+  //       let formData = new FormData();
+  //       let firstName = $('#firstName').val();
+  //       let lastName = $('#lastName').val();
+  //       let birthDate = $('#birthDate').val();
+  //       let email = $('#email').val();
+  //       let phone = $('#phone').val();
+  //       let active = $('#active').val();
+  //       formData.append('firstname', firstName)
+  //       formData.append('lastname', lastName)
+  //       formData.append('birthDate', birthDate)
+  //       formData.append('email', email)
+  //       formData.append('phone', phone)
+  //       formData.append('active', active)
+  //       formData.append('account', data.id)
+  //       $.ajax({
+  //         contentType: false,
+  //         processData: false,
+  //         enctype: 'multipart/form-data',
+  //         dataType: "json",
+  //         type: "POST",
+  //         url: "http://localhost:8080/teacher",
+  //         data: formData,
+  //         success: function (data){
+  //           successHandler()
+  //           alert("Thêm thành công")
+  //           console.log(data)
+  //         }
+  //       })
+  //       event.preventDefault();
+  //     }
+  //   })
+  //   event.preventDefault();
+  // }
+
 
   function deleteTeacher(element){
     let id = element.getAttribute("href");
     $.ajax({
       type: "DELETE",
-      //tên API
       url: `http://localhost:8080/teacher/`+id,
       //xử lý khi thành công
-      success: function (){
-        successHandler()
-      }
+      success: function () {
+        successHandler();
+      },
     });
-
+    event.preventDefault();
   }
 
   function showFormUpdate(element){
@@ -303,6 +349,43 @@ checkLogin()
     event.preventDefault();
   }
 
+  function searchStudent(){
+    let search= $('#search').val();
+    $.ajax({
+      headers:{
+        'Accept':'application/json',
+        'Content-Type': 'application/json'
+      },
+      type:"GET",
+      url:`http://localhost:8080/teacher?search=${search}`,
+      success:function (data){
+        console.log(data);
+
+        let str = '    <tr>\n' +
+                '        <td>First Name</td>\n' +
+                '        <td>Last Name</td>\n' +
+                '        <td>Birth</td>\n' +
+                '        <td>Address</td>\n' +
+                '        <td>Email</td>\n' +
+                '        <td>Phone</td>\n' +
+                '        <td>Account</td>\n' +
+                '        <td>Password</td>\n' +
+                '        <td>Active</td>\n' +
+                '        <td>Edit</td>\n' +
+                '        <td>Delete</td>\n' +
+                '    </tr>';
+
+        for (let i = 0; i < data.content.length; i++) {
+          str += getStudent(data.content[i]);
+          console.log("hello")
+        }
+        console.log(str)
+        document.getElementById('teacherList').innerHTML = str;
+      }
+    })
+    event.preventDefault();
+  }
+
 </script>
 <body class="main-layout inner_header about_page">
 
@@ -319,9 +402,14 @@ checkLogin()
       <table id="teacherList" class="table table-striped"></table>
     </div>
 
+    <form >
+      <input type="text" id="search" name="search" placeholder="search">
+      <input type="submit" value="Search" onclick="searchStudent()">
+    </form>
+
     <button class="btn btn-primary" onclick="displayFormCreate()">Create new teacher</button>
 
-    <form id="form1">
+    <form id="form1" hidden>
       <input type="hidden" id="id" placeholder="id">
       <div class="mb-3 mt-3">
         <label for="firstName" class="form-label">First Name:</label>
@@ -349,7 +437,7 @@ checkLogin()
       </div>
       <div class="mb-3">
         <label for="password" class="form-label">Password:</label>
-        <input type="text" class="form-control" id="password" placeholder="Enter password">
+        <input type="password" class="form-control" id="password" placeholder="Enter password">
       </div>
       <div class="mb-3">
         <label for="file" class="form-label">File:</label>
