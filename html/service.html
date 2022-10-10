@@ -62,41 +62,223 @@
            <div class="row">
               <div class="col-md-12">
                  <div class="titlepage">
-                  <h2>Build Your Website, Let's Check Our Services</h2>
+                  <h2>Khóa học của chúng tôi</h2>
                  </div>
               </div>
            </div>
         </div>
      </div>
 
+
+
+      <script>
+         function allCourse() {
+            $.ajax({
+               headers:{
+                  'Accept':'application/json',
+                  'Content-Type': 'application/json'
+               },
+               type:"GET",
+               url: `http://localhost:8080/course`,
+               success: function (data) {
+                  console.log("aasdasdad")
+                  let content ="";
+                  if (data == null) {
+                     document.getElementById("studentList").innerHTML = content;
+                  } else {
+                     for (let i = 0; i < data.length; i++) {
+                        content +=
+                                "<div style='float: left' class=\"col-6\">\n" +
+                                " <a href='#' onclick='clickCourse()'>   " +
+                                // " <input value='"+ course[i].id +"' id='courseId' type='hidden'>   " +
+                                "<div class=\"item-restaurant-row\" style=\"height: 250px;padding-top: 20px ;margin:  0 0px 0px; left: 0px;  width: 100%;\">\n" +
+                                "        <div style='padding-left: 30px' class=\"row\">\n" +
+                                "            <div class=\"col-auto item-restaurant-img\">\n" +
+                                "                <img src=\"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3054aAwgy_5J00ygoxXaJRms0M9trMZutvKkyBJJU2ZUWqvHhPMBvB8Q0Z6VZMb5_cXc&usqp=CAU\" alt=\"Bánh hỏi heo quay Chả Giò\" width=\"200\" height=\"200\">\n" +
+                                "                </button>\n" +
+                                "            </div>\n" +
+                                "            <div class=\"col item-restaurant-info\">\n" +
+                                "                <h2 class=\"item-restaurant-name tenkhoahoc\"> "+ data[i].term +"</h2>\n" +
+                                "                <div class=\"item-restaurant-desc\">"+data[i].description+"</div>\n  <i   style='color: #ffffff; background: #38e710' class=\"gg-chevron-down-o\"></i>" +
+
+                                "            </div>\n" +
+                                "            <div class=\"col-auto item-restaurant-more\">\n" +
+                                "                <div class=\"row \">\n" +
+                                "                    <div class=\"col-auto product-price\">\n" +
+                                "                        <div class=\"current-price\">"+data[i].price+"<span style=\"font-weight: bolder;position: relative;top: -9px;font-size: 10px;right: 0;\">đ</span></div>\n" +
+                                "                    </div>\n" +
+                                "                </div>\n" +
+                                "            </div>\n" +
+                                "        </div>\n" +
+                                "    </div></a>\n " +
+                                "</div>";
+                     }
+                     document.getElementById("showAllCourse").innerHTML = content;
+                  }
+               }
+            })
+
+         }
+
+         function clickCourse(){
+            if (localStorage.getItem("token")){
+               alert("Đang bảo trì!!!")
+            }else {
+               alert("Đăng nhập để sử dụng!!!")
+            }
+         }
+         allCourse()
+      </script>
          <!-- services -->
-         <div  class="services">
-            <div class="container">
-               <div class="row">
-                  <div class="col-md-4">
-                     <div  class="services_box">
-                        <i><img src="../images/service1.png" alt="#"/></i>
-                        <h3>Web Design</h3>
-                        <a class="right_irro" href="#"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
-                     </div>
+         <div  class="row">
+         </div>
+      <br>
+      <br>
+      <br>
+      <br>
+      <div class="container">
+         <div class="row home-product d-flex">
+            <div class="col-md-6 home-product__info order-2">
+               <div class="home-ribbon">
+                  <svg width="17" height="82" viewBox="0 0 17 82" fill="none" xmlns="http://www.w3.org/2000/svg">
+                     <path d="M6.66699 7.04883L10.5573 81.2806" stroke="black" stroke-width="3"></path>
+                     <circle cx="6.6674" cy="7.04928" r="5.69447" transform="rotate(-3 6.6674 7.04928)" fill="#F27712" stroke="black"></circle>
+                  </svg>
+                  <div class="bookmark-ribbon bookmark-ribbon--yellow">
+                     <strong>Tiếng Nhật ONLINE VIP</strong>
                   </div>
-                  <div class="col-md-4">
-                     <div  class="services_box">
-                        <i><img src="../images/service2.png" alt="#"/></i>
-                        <h3>Data Analysis</h3>
-                        <a class="right_irro" href="#"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
-                     </div>
+               </div>
+               <div class="pl-md-5 mt-3">
+                  <p class="  text-lg">Học trực tiếp với giáo viên qua Zoom, Livestream</p>
+                  <p class=" text-sm">Là hình thức học kết hợp giữa khóa online, với các buổi học trực tiếp với giáo viên qua Zoom, Livestream, khóa học theo sát quá trình học tập của học viên, đảm bảo kết quả đầu ra.</p>
+                  <ul class="d-flex home-tabs">
+                     <li class="home-tab">
+                        <a href="https://onlinevip.dungmori.com" target="_blank" class="home-tab__inner home-tab__inner--orange">JLPT</a>
+                     </li>
+                     <li class="home-tab">
+                        <a href="https://kaiwa.dungmori.com/" target="_blank" class="home-tab__inner home-tab__inner--orange">Kaiwa</a>
+                     </li>
+                     <li class="home-tab">
+                        <a href="https://luyende.dungmori.com" target="_blank" class="home-tab__inner home-tab__inner--orange">Luyện đề</a>
+                     </li>
+                  </ul>
+
+               </div>
+            </div>
+            <div class="col-md-6 pc">
+               <div class="home-preview d-flex">
+                  <div class="home-preview__inside flex-fill flex-1">
+                     <img alt="Dũng Mori Online VIP" src="https://dungmori.com/assets/img/new_home/12-2021/online-vip-bg.jpeg" class="tab-pane active">
                   </div>
-                  <div class="col-md-4">
-                     <div id="serv_hover" class="services_box">
-                        <i><img src="../images/service3.png" alt="#"/></i>
-                        <h3>Marketing Analysis</h3>
-                        <a class="right_irro" href="#"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
-                     </div>
+                  <div class="home-preview__arrow-right"></div>
+                  <div class="home-preview__icon home-preview__icon--left">
+                     <img alt="Khoá JLPT Online Logo" src="https://dungmori.com/assets/img/new_home/12-2021/teaching-mori.svg">
                   </div>
                </div>
             </div>
          </div>
+      </div>
+      <br>
+      <br>
+      <br>
+      <br>
+
+      <div class="container">
+         <div class="row home-product d-flex">
+            <div class="col-md-6 home-product__info">
+               <div class="home-ribbon">
+                  <svg width="17" height="82" viewBox="0 0 17 82" fill="none" xmlns="http://www.w3.org/2000/svg">
+                     <path d="M6.66699 7.04883L10.5573 81.2806" stroke="black" stroke-width="3"></path>
+                     <circle cx="6.6674" cy="7.04928" r="5.69447" transform="rotate(-3 6.6674 7.04928)" fill="#7CA4FF" stroke="black"></circle>
+                  </svg>
+                  <div class="bookmark-ribbon bookmark-ribbon--blue">
+                     <strong>Tiếng Nhật OFFLINE</strong>
+                  </div>
+               </div>
+               <div class="pl-md-5 mt-3">
+                  <p class=" font-bold text-lg">Học trực tiếp cùng Giảng viên Việt Nam và Giảng viên Nhật Bản giàu kinh nghiệm</p>
+                  <p class=" text-sm">Lớp học trực tiếp tại Trung tâm DC Nihongo cơ sở Hà Nội, cam kết đầu ra đảm bảo thi đỗ JLPT sau khi hoàn thành khóa học</p>
+                  <div class="tab-pane active" id="productJlpt">
+                     <div class="d-flex align-items-center flex-wrap">
+                        <a href="https://offline.dungmori.com/" target="_blank" class="mt-4 btn home-product-link home-product-link--blue">N5</a>
+                        <a href="https://offline.dungmori.com/" target="_blank" class="mt-4 btn home-product-link home-product-link--blue">N4</a>
+                        <a href="https://offline.dungmori.com/" target="_blank" class="mt-4 btn home-product-link home-product-link--blue">N3</a>
+                        <a href="https://offline.dungmori.com/" target="_blank" class="mt-4 btn home-product-link home-product-link--blue">N2</a>
+                        <a href="https://offline.dungmori.com/" target="_blank" class="mt-4 btn home-product-link home-product-link--blue">N1</a>
+                     </div>
+                  </div>
+                  <a href="https://offline.dungmori.com/" target="_blank" class="">Xem chi tiết</a>
+               </div>
+            </div>
+            <div class="col-md-6 pc">
+               <div class="home-preview d-flex">
+                  <div class="home-preview__inside flex-fill flex-1">
+                     <img alt="Dũng Mori Offline" src="https://dungmori.com/assets/img/new_home/12-2021/offline-bg.jpeg" class="tab-pane active">
+                  </div>
+                  <div class="home-preview__arrow-left"></div>
+                  <div class="home-preview__icon home-preview__icon--right">
+                     <img alt="Khoá JLPT Online Logo" src="https://dungmori.com/assets/img/new_home/12-2021/running-mori.svg">
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <br>
+      <br>
+      <br>
+      <br>
+
+      <div class="container">
+         <div class="row home-product d-flex">
+            <div class="col-md-6 home-product__info order-2">
+               <div class="home-ribbon">
+                  <svg width="17" height="82" viewBox="0 0 17 82" fill="none" xmlns="http://www.w3.org/2000/svg">
+                     <path d="M6.66699 7.04883L10.5573 81.2806" stroke="black" stroke-width="3"></path>
+                     <circle cx="6.6674" cy="7.04928" r="5.69447" transform="rotate(-3 6.6674 7.04928)" fill="#9159FF" stroke="black"></circle>
+                  </svg>
+                  <div class="bookmark-ribbon bookmark-ribbon--violet">
+                     <strong>Tủ sách DC</strong>
+                  </div>
+               </div>
+               <div class="pl-md-5 mt-3">
+                  <p class="font-montserrat font-bold text-lg">Tủ sách được viết bằng phương pháp nghiên cứu độc quyền từ DC Nihongo</p>
+                  <p class="font-quicksand text-sm">Sau gần 10 năm nghiên cứu và phát triển phương pháp dạy chữ Hán, ngữ pháp, DC hiện đã cho ra mắt bộ sách để học kèm cùng các khóa học luyện thi JLPT của DC Nihongo, giúp tăng gấp 3 hiệu quả</p>
+                  <ul class="d-flex home-tabs">
+                     <li class="home-tab">
+                        <a href="https://sach.dungmori.com/" class="home-tab__inner home-tab__inner--violet"><p  style="margin-left:20px">Sơ Cấp</p></a>
+                     </li>
+                     <li class="home-tab">
+                        <a href="https://sach.dungmori.com/" class="home-tab__inner home-tab__inner--violet"><p  style="margin-left:20px">Trung Cấp</p></a>
+                     </li>
+                     <li class="home-tab">
+                        <a href="https://sach.dungmori.com/" class="home-tab__inner home-tab__inner--violet"><p  style="margin-left:20px">Cao Cấp</p></a>
+                     </li>
+                  </ul>
+                  <a href="https://sach.dungmori.com/" target="_blank" class="home-product__button">Xem chi tiết</a>
+               </div>
+            </div>
+            <div class="col-md-6 pc">
+               <div class="home-preview d-flex">
+                  <div class="home-preview__inside flex-fill flex-1 tab-content">
+                     <img alt="Dũng Mori Sách" src="https://dungmori.com/assets/img/new_home/12-2021/home-ts.png" class="tab-pane active">
+                  </div>
+                  <div class="home-preview__arrow-right"></div>
+                  <div class="home-preview__icon home-preview__icon--left">
+                     <img alt="Khoá JLPT Online Logo" src="https://dungmori.com/assets/img/new_home/12-2021/reading-mori.svg">
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <br>
+      <br>
+      <br>
+      <div id="showAllCourse"></div>
+
+      <div class="row"></div>
+
          <!-- end services -->
        
       <!--  footer -->
