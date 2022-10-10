@@ -74,13 +74,10 @@
       $("#header").load("fragment/header.html");
       $("#footer").load("fragment/footer.html");
     });
-<<<<<<< HEAD
-checkLogin()
-</script>
-=======
-    // checkLogin();
+
+// checkLogin()
   </script>
->>>>>>> home
+
 </head>
 
 <script>
@@ -312,7 +309,6 @@ checkLogin()
         'Content-Type': 'application/json'
       },
       type: "PUT",
-<<<<<<< HEAD
       url: "http://localhost:8080/account/" + id,
       data: JSON.stringify(accounts),
       success: function (data){
@@ -388,13 +384,14 @@ checkLogin()
         }
         console.log(str)
         document.getElementById('teacherList').innerHTML = str;
-=======
-      url: `http://localhost:8080/teacher/${id}`,
-      data:JSON.stringify(teacher),
-      success: function (data) {
-        console.log(id);
-        successHandler();
->>>>>>> home
+
+// >>>>>>> home
+//       url: `http://localhost:8080/teacher/${id}`,
+//       data:JSON.stringify(teacher),
+//       success: function (data) {
+//         console.log(id);
+//         successHandler();
+// >>>>>>> home
       }
     })
     event.preventDefault();
