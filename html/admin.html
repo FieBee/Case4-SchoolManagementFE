@@ -32,7 +32,19 @@
     <!--      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>-->
     <!--      <![endif]&ndash;&gt;-->
 
+    <script
+            src="https://code.jquery.com/jquery-3.3.1.js"
+            integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+            crossorigin="anonymous">
+    </script>
 
+    <script>
+        $(function () {
+            $("#header").load("fragment/header.html");
+            $("#footer").load("fragment/footer.html");
+            checkLogin();
+        });
+    </script>
 
     <link rel="stylesheet" href="../css/style.css">
 </head>

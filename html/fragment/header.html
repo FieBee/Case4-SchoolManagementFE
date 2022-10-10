@@ -27,7 +27,7 @@
 
                                 <a class="nav-link" onclick="goProfile()" href="">
                                     <li class="nav-item ">
-                                        <p id="name">
+                                        <p style="font-size:22px " id="name">
                                         </p>
                                     </li>
                                 </a>
@@ -87,7 +87,7 @@
 
 
     function checkLogin(){
-        // let token = localStorage.getItem("token");
+
         let userName = localStorage.getItem("name")
         if (userName == null){
 
@@ -152,18 +152,14 @@
 
             //xử lý khi thành công
             success: function (data) {
-                // console.log("aloasdasd")
+
                 // localStorage.setItem("course", JSON.stringify(data.courses));
                 // localStorage.setItem("payment", JSON.stringify(data.payment));
 
 
                 localStorage.setItem("name",data.lastName);
                 checkLogin()
-
-
-                // localStorage.setItem("student", JSON.stringify(data));
-                // console.log(data.lastName)
-                // return data
+                localStorage.setItem("teacher", JSON.stringify(data));
 
             }
         })
@@ -173,9 +169,14 @@
 function checkName(){
     let checkRole = localStorage.getItem("role");
     if (checkRole=="ROLE_TEACHER"){
+        // console.log(checkRole)
         getTeacher()
     }else if (checkRole=="ROLE_STUDENT"){
+        // console.log(checkRole)
         getStudent()
+    }else if (checkRole=="ROLE_ADMIN"){
+        // console.log(checkRole)
+        localStorage.setItem("name","Admin");
     }
 }
 
