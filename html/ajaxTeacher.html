@@ -74,7 +74,7 @@
       $("#header").load("fragment/header.html");
       $("#footer").load("fragment/footer.html");
     });
-// checkLogin()
+checkLogin()
 </script>
 </head>
 
@@ -194,7 +194,7 @@
           //xử lý khi thành công
           success: function (data){
             successHandler()
-            alert("thanhcong")
+            alert("Thêm thành công")
             console.log(data)
           }
         })
@@ -205,17 +205,6 @@
   }
 
 
-
-  // function addNewTeacher() {
-  //   let newAccount = addNewAccount();
-  //   //lay du lieu
-  //
-  //
-  //
-  //
-  //
-  //   });
-  //   //chặn sự kiện mặc định của thẻ
 
   function deleteTeacher(element){
     let id = element.getAttribute("href");
@@ -304,7 +293,7 @@
           data: JSON.stringify(teachers),
           success: function (data){
             successHandler()
-            alert("thanhcong")
+            alert("Sửa thành công")
             console.log(data)
           }
         })
@@ -336,31 +325,31 @@
       <input type="hidden" id="id" placeholder="id">
       <div class="mb-3 mt-3">
         <label for="firstName" class="form-label">First Name:</label>
-        <input type="text" class="form-control" id="firstName" placeholder="Enter name">
+        <input type="text" class="form-control" id="firstName" placeholder="Enter first name">
       </div>
       <div class="mb-3">
         <label for="lastName" class="form-label">Last Name:</label>
-        <input type="text" class="form-control" id="lastName" placeholder="Enter price">
+        <input type="text" class="form-control" id="lastName" placeholder="Enter last name">
       </div>
       <div class="mb-3">
         <label for="birthDate" class="form-label">Birth Date:</label>
-        <input type="text" class="form-control" id="birthDate" placeholder="Enter quantity">
+        <input type="text" class="form-control" id="birthDate" placeholder="Enter birth date">
       </div>
       <div class="mb-3">
         <label for="email" class="form-label">Email:</label>
-        <input type="text" class="form-control" id="email" placeholder="Enter weight">
+        <input type="text" class="form-control" id="email" placeholder="Enter email">
       </div>
       <div class="mb-3">
         <label for="phone" class="form-label">Phone:</label>
-        <input type="text" class="form-control" id="phone" placeholder="Enter description">
+        <input type="text" class="form-control" id="phone" placeholder="Enter phone">
       </div>
       <div class="mb-3">
         <label for="account" class="form-label">Account:</label>
-        <input type="text" class="form-control" id="account" placeholder="Enter description">
+        <input type="text" class="form-control" id="account" placeholder="Enter account">
       </div>
       <div class="mb-3">
         <label for="password" class="form-label">Password:</label>
-        <input type="text" class="form-control" id="password" placeholder="Enter description">
+        <input type="text" class="form-control" id="password" placeholder="Enter password">
       </div>
       <div class="mb-3">
         <label for="file" class="form-label">File:</label>
