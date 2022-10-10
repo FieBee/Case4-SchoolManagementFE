@@ -84,6 +84,8 @@
         }
         event.preventDefault();
     }
+
+
     function checkLogin(){
         // let token = localStorage.getItem("token");
         let userName = localStorage.getItem("name")
@@ -133,7 +135,53 @@
         event.preventDefault();
     }
 
-    getStudent();
+    function getTeacher(){
+        let studentalo = localStorage.getItem("accountname");
+        console.log(studentalo);
+        // console.log("alosooo");
+        $.ajax({
+            type: "GET",
+            headers: {
+
+                //kiểu dữ liệu nhận về
+                'Accept': 'application/json',
+                // kiểu truyền đi
+                'Content-Type': 'application/json'
+            },
+
+            url: `http://localhost:8080/teacher/getTeacher/${studentalo}`,
+
+            //xử lý khi thành công
+            success: function (data) {
+                // console.log("aloasdasd")
+                // localStorage.setItem("course", JSON.stringify(data.courses));
+                // localStorage.setItem("payment", JSON.stringify(data.payment));
+
+
+                localStorage.setItem("name",data.lastName);
+                checkLogin()
+
+
+                // localStorage.setItem("student", JSON.stringify(data));
+                // console.log(data.lastName)
+                // return data
+
+            }
+        })
+        event.preventDefault();
+    }
+
+function checkName(){
+    let checkRole = localStorage.getItem("role");
+    if (checkRole=="ROLE_TEACHER"){
+        getTeacher()
+    }else if (checkRole=="ROLE_STUDENT"){
+        getStudent()
+    }
+
+}
+
+    checkName();
 
 </script>
 
