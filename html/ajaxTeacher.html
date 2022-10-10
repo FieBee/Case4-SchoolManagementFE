@@ -74,8 +74,13 @@
       $("#header").load("fragment/header.html");
       $("#footer").load("fragment/footer.html");
     });
+<<<<<<< HEAD
 checkLogin()
 </script>
+=======
+    // checkLogin();
+  </script>
+>>>>>>> home
 </head>
 
 <script>
@@ -281,7 +286,8 @@ checkLogin()
         console.log(id);
         $('#id').attr('value',`${data.id}`)
         $('#firstName').attr('value',`${data.firstName}`)
-        $('#birthDate').attr('value',`${data.lastName}`)
+        $('#lastName').attr('value',`${data.lastName}`)
+        $('#birthDate').attr('value',`${data.birth}`)
         $('#email').attr('value',`${data.email}`)
         $('#phone').attr('value',`${data.phone}`)
         $('#account').attr('value',`${data.account.account}`)
@@ -306,6 +312,7 @@ checkLogin()
         'Content-Type': 'application/json'
       },
       type: "PUT",
+<<<<<<< HEAD
       url: "http://localhost:8080/account/" + id,
       data: JSON.stringify(accounts),
       success: function (data){
@@ -381,6 +388,13 @@ checkLogin()
         }
         console.log(str)
         document.getElementById('teacherList').innerHTML = str;
+=======
+      url: `http://localhost:8080/teacher/${id}`,
+      data:JSON.stringify(teacher),
+      success: function (data) {
+        console.log(id);
+        successHandler();
+>>>>>>> home
       }
     })
     event.preventDefault();
