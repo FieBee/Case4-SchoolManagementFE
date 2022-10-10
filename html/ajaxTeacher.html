@@ -74,7 +74,7 @@
       $("#header").load("fragment/header.html");
       $("#footer").load("fragment/footer.html");
     });
-    checkLogin();
+    // checkLogin();
   </script>
 </head>
 
@@ -252,13 +252,14 @@
         'Content-Type': 'application/json'
       },
       type: "GET",
-      url: `/teacher/${id}`,
+      url: `http://localhost:8080/teacher/${id}`,
       success: function (data) {
         console.log(data);
         console.log(id);
         $('#id').attr('value',`${data.id}`)
         $('#firstName').attr('value',`${data.firstName}`)
-        $('#birthDate').attr('value',`${data.lastName}`)
+        $('#lastName').attr('value',`${data.lastName}`)
+        $('#birthDate').attr('value',`${data.birth}`)
         $('#email').attr('value',`${data.email}`)
         $('#phone').attr('value',`${data.phone}`)
         $('#account').attr('value',`${data.account}`)
@@ -295,7 +296,7 @@
         'Content-Type': 'application/json'
       },
       type: "PUT",
-      url: `/teacher/${id}`,
+      url: `http://localhost:8080/teacher/${id}`,
       data:JSON.stringify(teacher),
       success: function (data) {
         console.log(id);
