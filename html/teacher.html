@@ -43,13 +43,13 @@
                 crossorigin="anonymous">
         </script>
 
-        <script>
-            $(function () {
-                $("#header").load("fragment/header.html");
-                $("#footer").load("fragment/footer.html");
-            });
-            checkLogin();
-        </script>
+<!--        <script>-->
+<!--            $(function () {-->
+<!--                $("#header").load("fragment/header.html");-->
+<!--                $("#footer").load("fragment/footer.html");-->
+<!--            });-->
+<!--            checkLogin();-->
+<!--        </script>-->
     </head>
 
     <script>
@@ -113,7 +113,6 @@
                 <td >${student.active}</td>
                 <td><a href="${student.id}" onclick="showFormUpdate(this)">Edit</a></td>
                 <td><a href="${student.id}" onclick="deleteStudent(this)">Delete</a></td>
-                <td><a href="${student.id}" >Detail</a></td>
                 </tr>`
         }
 
@@ -123,6 +122,8 @@
                 type: "GET",
                 url: "http://localhost:8080/student",
                 success: function (data) {
+                    console.log("Chao")
+                    console.log(data)
                     let content =
                         `<tr>
                         <td>First Name</td>
@@ -136,11 +137,11 @@
                         <td>Status</td>
                         <td>Edit</td>
                         <td>Delete</td>
-                        <td>Detail</td>
                     </tr>`;
                     if (data == null) {
                         document.getElementById("studentList").innerHTML = content;
                     } else {
+
                         for (let i = 0; i < data.content.length; i++) {
                             content += getStudent(data.content[i]);
                         }
@@ -151,49 +152,70 @@
         }
         successHandler();
 
+
         function addNewStudent() {
             //lay du lieu
-            let firstName = $('#firstName').val();
-            let lastName = $('#lastName').val();
-            let birth = $('#birth').val();
-            let address = $('#address').val();
-            let email = $('#email').val();
-            let phone = $('#phone').val();
             let account = $('#account').val();
             let password = $('#password').val();
-            let active = $('#active').val();
-            let newStudent = {
-                firstName: firstName,
-                lastName: lastName,
-                birth:birth,
-                address: address,
-                email: email,
-                phone: phone,
-                account: {
-                    account: account,
-                    password: password,
-            },
-                password: password,
-                active: active,
-            };
+            let newAccount = {
+                account: account,
+                password: password
+            }
+            // console.log(newAccount)
             $.ajax({
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
                 type: "POST",
-                data: JSON.stringify(newStudent),
+                data: JSON.stringify(newAccount),
                 //tên API
-                url: "http://localhost:8080/student",
+                url: "http://localhost:8080/account",
                 //xử lý khi thành công
-                success:function (data){
-                    successHandler();
+                success: function (data){
+                    console.log("tao account thanh cong")
+                    console.log(data.id)
+                    let firstName = $('#firstName').val();
+                    let lastName = $('#lastName').val();
+                    let birth = $('#birth').val();
+                    let address = $('#address').val();
+                    let email = $('#email').val();
+                    let phone = $('#phone').val();
+                    let active = $('#active').val();
+                    let newTeacher = {
+                        firstName: firstName,
+                        lastName: lastName,
+                        birth: birth,
+                        address:address,
+                        email: email,
+                        phone: phone,
+                        account: {
+                            id : data.id
+                        },
+                        active: active,
+                    };
+                    $.ajax({
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        type: "POST",
+                        data: JSON.stringify(newTeacher),
+                        //tên API
+                        url: "http://localhost:8080/student",
+                        //xử lý khi thành công
+                        success: function (data){
+                            successHandler()
+                            alert("thanh cong")
+                            console.log(data)
+                        }
+                    })
+                    event.preventDefault();
                 }
-
-            });
-            //chặn sự kiện mặc định của thẻ
+            })
             event.preventDefault();
         }
+
 
         function deleteStudent(element){
             let id = element.getAttribute("href");
@@ -244,13 +266,12 @@
             let firstName = $('#firstName').val();
             let lastName = $('#lastName').val();
             let address= $('#address').val();
-
             let email = $('#email').val();
             let phone = $('#phone').val();
             let account = $('#account').val();
             let password = $('#password').val();
             let active = $('#active').val();
-            let teacher = {
+            let student = {
                 firstName: firstName,
                 lastName: lastName,
                 email: email,
@@ -270,11 +291,13 @@
                 },
                 type: "PUT",
                 url: `http://localhost:8080/student/${id}`,
-                data:JSON.stringify(teacher),
+                data:JSON.stringify(student),
                 success: function (data) {
+                    console.log("Day la data")
+                    console.log(data)
                     console.log(id);
                     successHandler();
-                }
+            },
             })
             event.preventDefault();
         }
@@ -315,21 +338,6 @@
             })
             event.preventDefault();
         }
-
-        function studentDetail(){
-            // let id = element.getAttribute("href");
-            // $.ajax({
-            //     type: "DELETE",
-            //     //tên API
-            //     url: `http://localhost:8080/student/${id}`,
-            //     //xử lý khi thành công
-            //     success: function (data){
-            //         console.log(id);
-            //         successHandler();
-            //     }
-            }
-            //chặn sự kiện mặc định của thẻ
-            // event.preventDefault();
 
     </script>
 
