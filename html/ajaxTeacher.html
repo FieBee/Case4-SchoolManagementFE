@@ -74,8 +74,8 @@
       $("#header").load("fragment/header.html");
       $("#footer").load("fragment/footer.html");
     });
-    checkLogin();
-  </script>
+// checkLogin()
+</script>
 </head>
 
 
@@ -92,7 +92,6 @@
     document.getElementById("form1").reset()
     document.getElementById("form1").hidden = false;
     document.getElementById("form-button").onclick = function () {
-      addNewTeacher();
     }
   }
 
@@ -146,18 +145,12 @@
 
 
   function addNewAccount(){
-
     let account = $('#account').val();
     let password = $('#password').val();
-
-
-
     let newAccount = {
       account: account,
       password: password
     }
-
-
     // console.log(newAccount)
     $.ajax({
       headers: {
@@ -172,14 +165,12 @@
       success: function (data){
         console.log("tao account thanh cong")
         console.log(data.id)
-
         let firstName = $('#firstName').val();
         let lastName = $('#lastName').val();
         let birthDate = $('#birthDate').val();
         let email = $('#email').val();
         let phone = $('#phone').val();
         let active = $('#active').val();
-
         let newTeacher = {
           firstName: firstName,
           lastName: lastName,
@@ -191,7 +182,6 @@
           },
           active: active,
         };
-
         $.ajax({
           headers: {
             'Accept': 'application/json',
@@ -203,15 +193,13 @@
           url: "http://localhost:8080/teacher",
           //xử lý khi thành công
           success: function (data){
+            successHandler()
             alert("thanhcong")
             console.log(data)
           }
-
-
         })
         event.preventDefault();
       }
-
     })
     event.preventDefault();
   }
@@ -234,7 +222,7 @@
     $.ajax({
       type: "DELETE",
       //tên API
-      url: `/teacher/`+id,
+      url: `http://localhost:8080/teacher/`+id,
       //xử lý khi thành công
       success: function (){
         successHandler()
@@ -252,7 +240,7 @@
         'Content-Type': 'application/json'
       },
       type: "GET",
-      url: `/teacher/${id}`,
+      url: `http://localhost:8080/teacher/${id}`,
       success: function (data) {
         console.log(data);
         console.log(id);
@@ -261,8 +249,8 @@
         $('#birthDate').attr('value',`${data.lastName}`)
         $('#email').attr('value',`${data.email}`)
         $('#phone').attr('value',`${data.phone}`)
-        $('#account').attr('value',`${data.account}`)
-        $('#password').attr('value',`${data.password}`)
+        $('#account').attr('value',`${data.account.account}`)
+        $('#password').attr('value',`${data.account.password}`)
         $('#active').attr('value',`${data.active}`)
       }
     })
@@ -270,24 +258,12 @@
   }
 
   function updateTeacher() {
-    let id = $('#id').val()
-    let firstName = $('#firstName').val();
-    let lastName = $('#lastName').val();
-    let birthDate = $('#birthDate').val();
-    let email = $('#email').val();
-    let phone = $('#phone').val();
+    let id = $('#id').val();
     let account = $('#account').val();
     let password = $('#password').val();
-    let active = $('#active').val();
-    let teacher = {
-      firstName: firstName,
-      lastName: lastName,
-      birthDate: birthDate,
-      email: email,
-      phone: phone,
+    let accounts = {
       account: account,
-      password: password,
-      active: active,
+      password: password
     }
     $.ajax({
       headers: {
@@ -295,11 +271,44 @@
         'Content-Type': 'application/json'
       },
       type: "PUT",
-      url: `/teacher/${id}`,
-      data:JSON.stringify(teacher),
-      success: function (data) {
-        console.log(id);
-        successHandler();
+      url: "http://localhost:8080/account/" + id,
+      data: JSON.stringify(accounts),
+      success: function (data){
+        console.log("tao account thanh cong")
+        console.log(data.id)
+        let id = $('#id').val();
+        let firstName = $('#firstName').val();
+        let lastName = $('#lastName').val();
+        let birthDate = $('#birthDate').val();
+        let email = $('#email').val();
+        let phone = $('#phone').val();
+        let active = $('#active').val();
+        let teachers = {
+          firstName: firstName,
+          lastName: lastName,
+          birthDate: birthDate,
+          email: email,
+          phone: phone,
+          account: {
+            id : data.id
+          },
+          active: active,
+        };
+        $.ajax({
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          type: "PUT",
+          url: "http://localhost:8080/teacher/" + id,
+          data: JSON.stringify(teachers),
+          success: function (data){
+            successHandler()
+            alert("thanhcong")
+            console.log(data)
+          }
+        })
+        event.preventDefault();
       }
     })
     event.preventDefault();
