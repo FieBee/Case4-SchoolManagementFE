@@ -23,7 +23,6 @@
 
 
 
-                                <!--                              UserName -->
 
                                 <a class="nav-link" onclick="goProfile()" href="">
                                     <li class="nav-item ">
@@ -48,7 +47,14 @@
                                     <a class="nav-link" href="http://localhost:63342/Case4-FE/html/contact.html?_ijt=6ov7d7np231p5tle4otjd3nvjf&_ij_reload=RELOAD_ON_SAVE">Liên hệ</a>
                                 </li>
                                 <li class="nav-item d_none">
-                                    <a class="nav-link" href="#"><i class="fa fa-search" aria-hidden="true"></i></a>
+                                    <a  class="nav-link" onclick="logout()" href="http://localhost:63342/Case4-FE/html/login.html?_ijt=a544h7enkpgcnpol8kof10qakh&_ij_reload=RELOAD_ON_SAVE">
+                                        <p id="dangxuat"></p>
+                                    </a>
+                                </li>
+
+
+
+                                </a>
                                 </li>
                             </ul>
                         </div>
@@ -93,15 +99,23 @@
 
             document.getElementById("name").innerText = "Login"
         }else {
+            document.getElementById("dangxuat").innerText = "Đăng xuất"
             document.getElementById("name").innerHTML = userName
             console.log(userName)
 
             // alert(userName)
         }
         event.preventDefault();
+
+
+
     }
 
+    function logout(){
+        localStorage.clear();
+        window.location.href = "http://localhost:63342/Case4-FE/html/login.html?_ijt=onmf85n7kvk03ck7h6gkairdo0&_ij_reload=RELOAD_ON_SAVE"
 
+    }
     function getStudent(){
         let studentalo = localStorage.getItem("accountname");
         console.log(studentalo);
@@ -181,6 +195,10 @@ function checkName(){
 }
 
     checkName();
+    checkLogin()
+
+</script>
+<script>
 
 </script>
 
