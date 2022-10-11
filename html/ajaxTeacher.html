@@ -125,9 +125,11 @@
         if (data == null) {
           document.getElementById("teacherList").innerHTML = content;
         } else {
-          for (let i = 0; i < data.content.length; i++) {
-            content += getTeacher(data.content[i]);
+          for (let i = 0; i < data.length; i++) {
+            content += getTeacher(data[i]);
           }
+
+          console.log(data);
           document.getElementById("teacherList").innerHTML = content;
         }
       }
