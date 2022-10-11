@@ -19,14 +19,13 @@ function login() {
         data: JSON.stringify(Account),
         //xử lý khi thành công
         success: function (data) {
+            console.log(data)
 
-            // let studentName = getStudent();
 
-            // console.log(studentName)
             localStorage.setItem("token", data.token);
             localStorage.setItem("role",data.appRole[0].name);
+            console.log(data.appRole[0].name)
             localStorage.setItem("accountname",username);
-            // localStorage.setItem("username",getStudent());
 
 
             if (data.appRole[0].name == "ROLE_ADMIN"
@@ -39,7 +38,6 @@ function login() {
             }
 
             console.log(data)
-            // getStudent()
 
         },
         error: function (err) {

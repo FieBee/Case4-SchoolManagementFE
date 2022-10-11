@@ -23,11 +23,10 @@
 
 
 
-                                <!--                              UserName -->
 
                                 <a class="nav-link" onclick="goProfile()" href="">
                                     <li class="nav-item ">
-                                        <p id="name">
+                                        <p style="font-size:22px " id="name">
                                         </p>
                                     </li>
                                 </a>
@@ -48,7 +47,14 @@
                                     <a class="nav-link" href="http://localhost:63342/Case4-FE/html/contact.html?_ijt=6ov7d7np231p5tle4otjd3nvjf&_ij_reload=RELOAD_ON_SAVE">Liên hệ</a>
                                 </li>
                                 <li class="nav-item d_none">
-                                    <a class="nav-link" href="#"><i class="fa fa-search" aria-hidden="true"></i></a>
+                                    <a  class="nav-link" onclick="logout()" href="http://localhost:63342/Case4-FE/html/login.html?_ijt=a544h7enkpgcnpol8kof10qakh&_ij_reload=RELOAD_ON_SAVE">
+                                        <p id="dangxuat"></p>
+                                    </a>
+                                </li>
+
+
+
+                                </a>
                                 </li>
                             </ul>
                         </div>
@@ -64,14 +70,14 @@
     function goProfile(){
         let accountName = localStorage.getItem("role");
         let userName = localStorage.getItem("name");
-        if (accountName == "ROLE_ADMIN") {
+        if (accountName === "ROLE_ADMIN") {
             alert("admin")
-            window.location.href = "http://localhost:63342/Case4-FE/html/ajaxTeacher.html?_ijt=1iblmr792orr81l8mf51jn601e&_ij"
-        }else if (accountName == "ROLE_TEACHER") {
-            window.location.href = "http://localhost:63342/Case4-FE/html/teacher.html?_ijt=1iblmr792orr81l8mf51jn601e&_ij"
+            window.location.href = "http://localhost:63342/Case4-FE/html/ajaxTeacher.html?_ijt=ai5bl1qmi41ojmmrmjpucst0ib&_ij_reload=RELOAD_ON_SAVE"
+        }else if (accountName === "ROLE_TEACHER") {
+            window.location.href = "http://localhost:63342/Case4-FE/html/teacher.html?_ijt=ai5bl1qmi41ojmmrmjpucst0ib&_ij_reload=RELOAD_ON_SAVE"
         }else if (accountName == "ROLE_STUDENT") {
             alert("di toi student")
-            window.location.href = "http://localhost:63342/Case4-FE/html/student.html?_ijt=ambmh8fhkeba75bao47d5l6hc9&_ij";
+            window.location.href = "http://localhost:63342/Case4-FE/html/student.html?_ijt=ai5bl1qmi41ojmmrmjpucst0ib&_ij_reload=RELOAD_ON_SAVE";
         }else {
             window.location.href = "http://localhost:63342/Case4-FE/html/login.html?_ijt=h73ll5dv4vl65rtfuaggopg31&_ij_reload=RELOAD_ON_SAVE"
             if (!userName == null){
@@ -84,23 +90,33 @@
         }
         event.preventDefault();
     }
+
+
     function checkLogin(){
-        // let token = localStorage.getItem("token");
+
         let userName = localStorage.getItem("name")
         if (userName == null){
 
             document.getElementById("name").innerText = "Login"
         }else {
+            document.getElementById("dangxuat").innerText = "Đăng xuất"
             document.getElementById("name").innerHTML = userName
             console.log(userName)
 
             // alert(userName)
         }
-
         event.preventDefault();
+
+
+
     }
 
+    function logout(){
+        alert("Đăng xuất!!")
+        localStorage.clear();
+        window.location.href = "http://localhost:63342/Case4-FE/html/login.html?_ijt=onmf85n7kvk03ck7h6gkairdo0&_ij_reload=RELOAD_ON_SAVE"
 
+    }
     function getStudent(){
         let studentalo = localStorage.getItem("accountname");
         console.log(studentalo);
@@ -133,7 +149,57 @@
         event.preventDefault();
     }
 
-    getStudent();
+    function getTeacher(){
+        let studentalo = localStorage.getItem("accountname");
+        console.log(studentalo);
+        // console.log("alosooo");
+        $.ajax({
+            type: "GET",
+            headers: {
+
+                //kiểu dữ liệu nhận về
+                'Accept': 'application/json',
+                // kiểu truyền đi
+                'Content-Type': 'application/json'
+            },
+
+            url: `http://localhost:8080/teacher/getTeacher/${studentalo}`,
+
+            //xử lý khi thành công
+            success: function (data) {
+
+                // localStorage.setItem("course", JSON.stringify(data.courses));
+                // localStorage.setItem("payment", JSON.stringify(data.payment));
+
+
+                localStorage.setItem("name",data.lastName);
+                checkLogin()
+                localStorage.setItem("teacher", JSON.stringify(data));
+
+            }
+        })
+        event.preventDefault();
+    }
+
+function checkName(){
+    let checkRole = localStorage.getItem("role");
+    if (checkRole=="ROLE_TEACHER"){
+        // console.log(checkRole)
+        getTeacher()
+    }else if (checkRole=="ROLE_STUDENT"){
+        // console.log(checkRole)
+        getStudent()
+    }else if (checkRole=="ROLE_ADMIN"){
+        // console.log(checkRole)
+        localStorage.setItem("name","Admin");
+    }
+}
+
+    checkName();
+    checkLogin()
+
+</script>
+<script>
 
 </script>
 
