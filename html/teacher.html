@@ -222,9 +222,9 @@
             $.ajax({
                 type: "DELETE",
                 //tên API
-                url: `http://localhost:8080/student/${id}`,
+                url: `http://localhost:8080/student/`+id,
                 //xử lý khi thành công
-                success: function (data){
+                success: function (){
                     console.log(id);
                     successHandler();
                 }
